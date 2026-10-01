@@ -1,674 +1,1198 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Nuestro primer mes</title>
+<title>Nuestro primer mes</title>
 
-    <style>
+<style>
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+/* =====================================================
+   BASE
+===================================================== */
 
-        html {
-            scroll-behavior: smooth;
-        }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-        body {
-            min-height: 100vh;
-            font-family: Georgia, 'Times New Roman', serif;
-            background:
-                radial-gradient(circle at 50% 40%, #24143d 0%, #100b19 45%, #050507 100%);
-            color: #f4f1f8;
-            overflow-x: hidden;
-        }
+html {
+    scroll-behavior: smooth;
+}
 
-        /* ESTRELLAS */
+body {
+    min-height: 100vh;
+    background:
+        radial-gradient(
+            circle at 50% 40%,
+            #24143d 0%,
+            #100b19 45%,
+            #050507 100%
+        );
+    color: #f4f1f8;
+    font-family: Georgia, "Times New Roman", serif;
+    overflow-x: hidden;
+}
 
-        .stars {
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            overflow: hidden;
-            z-index: 0;
-        }
+/* =====================================================
+   ESTRELLAS
+===================================================== */
 
-        .star {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background: #d9d4e2;
-            border-radius: 50%;
-            opacity: 0.6;
-            animation: twinkle 3s infinite ease-in-out;
-        }
+.stars {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+}
 
-        /* PORTADA */
+.star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: #ddd5ea;
+    border-radius: 50%;
+    opacity: .5;
+    animation: twinkle 4s infinite ease-in-out;
+}
 
-        #portada {
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            position: relative;
-            z-index: 2;
-            transition: opacity 1s ease, transform 1s ease;
-        }
+.star.big {
+    width: 3px;
+    height: 3px;
+}
 
-        .container {
-            padding: 30px;
-            animation: appear 1.8s ease forwards;
-        }
+/* =====================================================
+   DECORACIONES
+===================================================== */
 
-        .small-text {
-            font-family: Arial, sans-serif;
-            text-transform: uppercase;
-            letter-spacing: 5px;
-            font-size: 11px;
-            color: #aaa1b8;
-            margin-bottom: 22px;
-        }
+.decor {
+    position: absolute;
+    pointer-events: none;
+    z-index: 1;
+}
 
-        h1 {
-            font-size: clamp(45px, 8vw, 90px);
-            font-weight: normal;
-            letter-spacing: -2px;
-            margin-bottom: 12px;
-        }
+.flower {
+    width: 180px;
+    opacity: .65;
+}
 
-        .subtitle {
-            color: #c8bfd3;
-            font-size: 17px;
-            font-style: italic;
-            margin-bottom: 45px;
-        }
+.flower path,
+.flower circle {
+    fill: none;
+    stroke: #a88bc8;
+    stroke-width: 1.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
 
-        .heart {
-            color: #9c7bc5;
-            font-size: 22px;
-            margin-bottom: 28px;
-            animation: pulse 2s infinite ease-in-out;
-        }
+.flower.top-left {
+    top: 0;
+    left: 0;
+}
 
-        .start-button,
-        .next-button,
-        .back-button {
-            border: 1px solid #81758f;
-            background: rgba(255, 255, 255, 0.03);
-            color: #f4f1f8;
-            padding: 15px 38px;
-            border-radius: 50px;
-            font-size: 13px;
-            letter-spacing: 3px;
-            cursor: pointer;
-            transition: all 0.4s ease;
-        }
+.flower.top-right {
+    top: 0;
+    right: 0;
+    transform: scaleX(-1);
+}
 
-        .start-button:hover,
-        .next-button:hover,
-        .back-button:hover {
-            background: #7c5aa2;
-            border-color: #bca7d4;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(124, 90, 162, 0.35);
-        }
+.flower.bottom-left {
+    bottom: 0;
+    left: 0;
+    transform: scaleY(-1);
+}
 
-        /* CARTA */
+.flower.bottom-right {
+    bottom: 0;
+    right: 0;
+    transform: scale(-1);
+}
 
-        #carta {
-            display: none;
-            min-height: 100vh;
-            padding: 80px 20px;
-            position: relative;
-            z-index: 2;
-        }
+/* =====================================================
+   LÍNEAS DECORATIVAS
+===================================================== */
 
-        .letter-container {
-            width: min(850px, 94%);
-            margin: auto;
-        }
+.orbit {
+    position: absolute;
+    width: 600px;
+    height: 250px;
+    border: 1px solid rgba(166, 137, 202, .18);
+    border-radius: 50%;
+    transform: rotate(-22deg);
+    pointer-events: none;
+}
 
-        .letter-header {
-            text-align: center;
-            margin-bottom: 60px;
-        }
+.orbit.one {
+    top: 20%;
+    left: -180px;
+}
 
-        .letter-header .mini-heart {
-            font-size: 25px;
-            color: #9c7bc5;
-            animation: pulse 2s infinite;
-            margin-bottom: 20px;
-        }
+.orbit.two {
+    bottom: 12%;
+    right: -200px;
+    transform: rotate(25deg);
+}
 
-        .letter-header h2 {
-            font-size: clamp(35px, 6vw, 60px);
-            font-weight: normal;
-            margin-bottom: 15px;
-        }
+/* =====================================================
+   LUNA
+===================================================== */
 
-        .letter-header p {
-            color: #aaa1b8;
-            font-family: Arial, sans-serif;
-            font-size: 12px;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-        }
+.moon {
+    position: absolute;
+    top: 70px;
+    right: 10%;
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    box-shadow: -10px 4px 0 #a78ac9;
+    transform: rotate(-20deg);
+    opacity: .8;
+}
 
-        /* SECCIONES */
+/* =====================================================
+   PORTADA
+===================================================== */
 
-        .letter-section {
-            display: none;
-            animation: sectionAppear 0.8s ease forwards;
-        }
+#portada {
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    overflow: hidden;
+    transition: opacity 1s ease, transform 1s ease;
+}
 
-        .letter-section.active {
-            display: block;
-        }
+.cover-content {
+    position: relative;
+    z-index: 5;
+    width: min(900px, 92%);
+    padding: 30px;
+    animation: appear 2s ease forwards;
+}
 
-        .section-number {
-            font-family: Arial, sans-serif;
-            color: #9c7bc5;
-            font-size: 11px;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            margin-bottom: 15px;
-        }
+.small-text {
+    font-family: Arial, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    font-size: 11px;
+    color: #aaa1b8;
+    margin-bottom: 22px;
+}
 
-        .section-title {
-            font-size: clamp(27px, 5vw, 42px);
-            font-weight: normal;
-            margin-bottom: 30px;
-        }
+.cover-heart {
+    font-size: 30px;
+    color: #a98aca;
+    margin-bottom: 18px;
+    animation: pulse 2.5s infinite;
+}
 
-        .letter-text {
-            color: #ddd8e3;
-            font-size: 18px;
-            line-height: 2;
-            white-space: pre-line;
-        }
+h1 {
+    font-size: clamp(45px, 8vw, 90px);
+    font-weight: normal;
+    letter-spacing: -2px;
+    color: #d8c6ee;
+    margin-bottom: 15px;
+    text-shadow: 0 0 35px rgba(156, 123, 197, .18);
+}
 
-        /* CONTROLES */
+.subtitle {
+    color: #c8bfd3;
+    font-size: 17px;
+    font-style: italic;
+    margin-bottom: 40px;
+}
 
-        .controls {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 15px;
-            margin-top: 55px;
-            flex-wrap: wrap;
-        }
+/* =====================================================
+   MANOS
+===================================================== */
 
-        .progress {
-            color: #91869f;
-            font-family: Arial, sans-serif;
-            font-size: 12px;
-            letter-spacing: 2px;
-            margin: 0 10px;
-        }
+.hands {
+    position: absolute;
+    left: 50%;
+    bottom: 4%;
+    transform: translateX(-50%);
+    width: min(850px, 90vw);
+    height: 260px;
+    z-index: 2;
+    pointer-events: none;
+}
 
-        .back-button {
-            padding: 12px 25px;
-            font-size: 11px;
-        }
+.hands svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
 
-        .next-button {
-            padding: 12px 30px;
-            font-size: 11px;
-        }
+.hands path,
+.hands line {
+    fill: none;
+    stroke: #aa8bca;
+    stroke-width: 1.25;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    opacity: .8;
+}
 
-        /* FINAL */
+.hand-glow {
+    filter: drop-shadow(0 0 7px rgba(166, 130, 206, .25));
+}
 
-        .final-message {
-            text-align: center;
-            padding: 30px 0 80px;
-        }
+/* =====================================================
+   BOTÓN
+===================================================== */
 
-        .final-message .big-heart {
-            font-size: 45px;
-            color: #9c7bc5;
-            animation: pulse 2s infinite;
-            margin-bottom: 30px;
-        }
+.start-button,
+.next-button,
+.back-button {
+    position: relative;
+    z-index: 10;
+    border: 1px solid #81758f;
+    background: rgba(255, 255, 255, .025);
+    color: #f4f1f8;
+    padding: 14px 35px;
+    border-radius: 50px;
+    font-size: 11px;
+    letter-spacing: 4px;
+    cursor: pointer;
+    transition: .4s ease;
+}
 
-        .final-message h3 {
-            font-size: clamp(30px, 6vw, 50px);
-            font-weight: normal;
-            margin-bottom: 25px;
-        }
+.start-button:hover,
+.next-button:hover,
+.back-button:hover {
+    background: #7c5aa2;
+    border-color: #cdb8e4;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 35px rgba(124, 90, 162, .35);
+}
 
-        .final-message p {
-            color: #c8bfd3;
-            font-size: 18px;
-            line-height: 1.9;
-            font-style: italic;
-        }
+/* =====================================================
+   CARTA
+===================================================== */
 
-        /* ANIMACIONES */
+#carta {
+    display: none;
+    min-height: 100vh;
+    padding: 90px 20px;
+    position: relative;
+    z-index: 3;
+}
 
-        @keyframes appear {
-            from {
-                opacity: 0;
-                transform: translateY(25px);
-            }
+.letter-container {
+    width: min(900px, 94%);
+    margin: auto;
+    position: relative;
+}
 
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+.letter-header {
+    text-align: center;
+    margin-bottom: 65px;
+}
 
-        @keyframes sectionAppear {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
+.letter-header .mini-heart {
+    color: #a98aca;
+    font-size: 25px;
+    margin-bottom: 20px;
+    animation: pulse 2s infinite;
+}
 
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+.letter-header h2 {
+    font-size: clamp(38px, 6vw, 62px);
+    font-weight: normal;
+    color: #d8c6ee;
+    margin-bottom: 15px;
+}
 
-        @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-                opacity: 0.7;
-            }
+.letter-header p {
+    color: #91869f;
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+}
 
-            50% {
-                transform: scale(1.15);
-                opacity: 1;
-            }
-        }
+/* =====================================================
+   DECORACIONES DE LA CARTA
+===================================================== */
 
-        @keyframes twinkle {
-            0%, 100% {
-                opacity: 0.2;
-            }
+.letter-flower {
+    position: absolute;
+    width: 150px;
+    opacity: .45;
+    pointer-events: none;
+}
 
-            50% {
-                opacity: 0.9;
-            }
-        }
+.letter-flower.left {
+    left: -80px;
+    top: 120px;
+}
 
-        /* MÓVIL */
+.letter-flower.right {
+    right: -80px;
+    bottom: 100px;
+    transform: scaleX(-1);
+}
 
-        @media (max-width: 600px) {
+.letter-flower path {
+    fill: none;
+    stroke: #9d80bf;
+    stroke-width: 1.1;
+    stroke-linecap: round;
+}
 
-            .letter-text {
-                font-size: 16px;
-                line-height: 1.85;
-            }
+/* =====================================================
+   SECCIONES
+===================================================== */
 
-            #carta {
-                padding-top: 50px;
-            }
+.letter-section {
+    display: none;
+    animation: sectionAppear .8s ease forwards;
+    position: relative;
+}
 
-            .letter-header {
-                margin-bottom: 45px;
-            }
+.letter-section.active {
+    display: block;
+}
 
-            .controls {
-                margin-top: 40px;
-            }
+.section-number {
+    font-family: Arial, sans-serif;
+    color: #9c7bc5;
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+}
 
-        }
+.section-title {
+    font-size: clamp(28px, 5vw, 43px);
+    font-weight: normal;
+    color: #d7c7e8;
+    margin-bottom: 30px;
+}
 
-    </style>
+.letter-text {
+    color: #ddd8e3;
+    font-size: 18px;
+    line-height: 2;
+}
+
+/* =====================================================
+   CONTROLES
+===================================================== */
+
+.controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 18px;
+    margin-top: 60px;
+    flex-wrap: wrap;
+}
+
+.progress {
+    color: #91869f;
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+}
+
+/* =====================================================
+   PLAYLIST
+===================================================== */
+
+.playlist-section {
+    margin-top: 110px;
+    padding: 70px 20px;
+    text-align: center;
+    border-top: 1px solid rgba(156, 123, 197, .22);
+    position: relative;
+}
+
+.playlist-text {
+    color: #aaa1b8;
+    font-size: 17px;
+    font-style: italic;
+    line-height: 1.8;
+    max-width: 600px;
+    margin: 0 auto 35px;
+}
+
+.spotify-player {
+    width: min(700px, 100%);
+    margin: auto;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,.5);
+}
+
+.spotify-player iframe {
+    display: block;
+    width: 100%;
+}
+
+/* =====================================================
+   FINAL
+===================================================== */
+
+.final-message {
+    text-align: center;
+    padding: 50px 0 80px;
+}
+
+.final-message .big-heart {
+    color: #a98aca;
+    font-size: 48px;
+    animation: pulse 2s infinite;
+    margin-bottom: 30px;
+}
+
+.final-message h3 {
+    font-size: clamp(32px, 6vw, 55px);
+    font-weight: normal;
+    color: #d8c6ee;
+    margin-bottom: 25px;
+}
+
+.final-message p {
+    color: #c8bfd3;
+    font-size: 18px;
+    font-style: italic;
+    line-height: 1.9;
+}
+
+/* =====================================================
+   ANIMACIONES
+===================================================== */
+
+@keyframes appear {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes sectionAppear {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0%,100% {
+        transform: scale(1);
+        opacity: .7;
+    }
+
+    50% {
+        transform: scale(1.12);
+        opacity: 1;
+    }
+}
+
+@keyframes twinkle {
+    0%,100% {
+        opacity: .15;
+    }
+
+    50% {
+        opacity: .9;
+    }
+}
+
+/* =====================================================
+   MÓVIL
+===================================================== */
+
+@media(max-width: 700px) {
+
+    .hands {
+        width: 100%;
+        bottom: 2%;
+        height: 190px;
+    }
+
+    .moon {
+        right: 8%;
+        top: 40px;
+        width: 40px;
+        height: 40px;
+    }
+
+    .flower {
+        width: 120px;
+    }
+
+    .letter-flower.left {
+        left: -40px;
+    }
+
+    .letter-flower.right {
+        right: -40px;
+    }
+
+    .letter-text {
+        font-size: 16px;
+        line-height: 1.85;
+    }
+
+    #carta {
+        padding-top: 55px;
+    }
+
+}
+
+</style>
 </head>
+
 
 <body>
 
-    <!-- ESTRELLAS -->
 
-    <div class="stars">
+<!-- =====================================================
+     ESTRELLAS
+===================================================== -->
 
-        <span class="star" style="top: 15%; left: 12%; animation-delay: 0s;"></span>
-        <span class="star" style="top: 25%; left: 82%; animation-delay: 1s;"></span>
-        <span class="star" style="top: 70%; left: 20%; animation-delay: 2s;"></span>
-        <span class="star" style="top: 78%; left: 76%; animation-delay: 0.5s;"></span>
-        <span class="star" style="top: 40%; left: 90%; animation-delay: 1.5s;"></span>
-        <span class="star" style="top: 60%; left: 8%; animation-delay: 2.5s;"></span>
+<div class="stars">
 
-        <span class="star" style="top: 10%; left: 55%; animation-delay: 1.2s;"></span>
-        <span class="star" style="top: 85%; left: 45%; animation-delay: 2.2s;"></span>
-        <span class="star" style="top: 33%; left: 5%; animation-delay: 0.7s;"></span>
-        <span class="star" style="top: 50%; left: 70%; animation-delay: 1.8s;"></span>
+    <span class="star" style="top:10%;left:12%;"></span>
+    <span class="star" style="top:20%;left:80%;animation-delay:1s;"></span>
+    <span class="star big" style="top:30%;left:55%;animation-delay:2s;"></span>
+    <span class="star" style="top:45%;left:8%;animation-delay:.5s;"></span>
+    <span class="star" style="top:60%;left:90%;animation-delay:1.5s;"></span>
+    <span class="star" style="top:75%;left:20%;animation-delay:2s;"></span>
+    <span class="star big" style="top:82%;left:70%;animation-delay:.7s;"></span>
+    <span class="star" style="top:15%;left:50%;animation-delay:1.7s;"></span>
+    <span class="star" style="top:68%;left:50%;animation-delay:2.4s;"></span>
+    <span class="star" style="top:38%;left:94%;animation-delay:.8s;"></span>
+
+</div>
+
+
+<!-- =====================================================
+     PORTADA
+===================================================== -->
+
+<section id="portada">
+
+
+    <!-- Luna -->
+
+    <div class="moon"></div>
+
+
+    <!-- Órbitas -->
+
+    <div class="orbit one"></div>
+    <div class="orbit two"></div>
+
+
+    <!-- Flor esquina superior izquierda -->
+
+    <svg class="decor flower top-left"
+         viewBox="0 0 200 200">
+
+        <path d="M10 190 C30 145 35 100 70 65 C95 40 120 20 155 10"/>
+        <path d="M45 125 C20 115 18 95 30 80 C48 85 57 100 45 125"/>
+        <path d="M62 94 C80 72 98 73 108 87 C92 103 77 105 62 94"/>
+        <path d="M88 62 C80 40 88 25 105 20 C117 38 108 54 88 62"/>
+        <path d="M35 150 C15 150 7 138 12 125 C28 126 38 135 35 150"/>
+
+        <circle cx="105" cy="20" r="3"/>
+
+    </svg>
+
+
+    <!-- Flor esquina superior derecha -->
+
+    <svg class="decor flower top-right"
+         viewBox="0 0 200 200">
+
+        <path d="M10 190 C30 145 35 100 70 65 C95 40 120 20 155 10"/>
+        <path d="M45 125 C20 115 18 95 30 80 C48 85 57 100 45 125"/>
+        <path d="M62 94 C80 72 98 73 108 87 C92 103 77 105 62 94"/>
+        <path d="M88 62 C80 40 88 25 105 20 C117 38 108 54 88 62"/>
+        <path d="M35 150 C15 150 7 138 12 125 C28 126 38 135 35 150"/>
+
+    </svg>
+
+
+    <!-- =================================================
+         CONTENIDO CENTRAL
+    ================================================= -->
+
+    <div class="cover-content">
+
+        <div class="small-text">
+            para mi persona favorita
+        </div>
+
+        <div class="cover-heart">
+            ♡
+        </div>
+
+        <h1>
+            Nuestro primer mes
+        </h1>
+
+        <p class="subtitle">
+            Una pequeña sorpresa hecha especialmente para ti.
+        </p>
+
+        <button class="start-button"
+                onclick="comenzar()">
+            COMENZAR →
+        </button>
 
     </div>
 
 
-    <!-- PORTADA -->
+    <!-- =================================================
+         MANOS
+    ================================================= -->
 
-    <section id="portada">
+    <div class="hands">
 
-        <main class="container">
+        <svg viewBox="0 0 900 300"
+             class="hand-glow">
 
-            <div class="small-text">
-                para mi persona favorita
-            </div>
+            <!-- BRAZO IZQUIERDO -->
 
-            <div class="heart">
+            <path d="M20 250
+                     C80 230 125 205 165 175
+                     C205 145 240 115 280 105"/>
+
+            <!-- MANO IZQUIERDA -->
+
+            <path d="M280 105
+                     C300 100 318 105 330 115
+                     C342 124 355 128 370 125"/>
+
+            <path d="M330 115
+                     C315 102 300 90 286 78
+                     C278 71 280 63 286 60
+                     C294 57 303 64 312 72
+                     L348 104"/>
+
+            <path d="M348 104
+                     C332 88 320 72 310 58
+                     C305 50 308 43 315 41
+                     C323 40 330 47 337 57
+                     L370 98"/>
+
+            <path d="M370 98
+                     C360 81 352 66 348 52
+                     C346 44 350 38 357 38
+                     C365 39 370 46 374 56
+                     L394 100"/>
+
+            <path d="M394 100
+                     C390 84 389 70 391 59
+                     C393 51 399 48 405 51
+                     C411 54 413 62 413 71
+                     L420 110"/>
+
+            <!-- DEDOS ACERCÁNDOSE -->
+
+            <path d="M420 110
+                     C440 112 456 108 474 99"/>
+
+            <path d="M474 99
+                     C492 90 505 82 516 78"/>
+
+
+            <!-- BRAZO DERECHO -->
+
+            <path d="M880 250
+                     C820 230 775 205 735 175
+                     C695 145 660 115 620 105"/>
+
+            <!-- MANO DERECHA -->
+
+            <path d="M620 105
+                     C600 100 582 105 570 115
+                     C558 124 545 128 530 125"/>
+
+            <path d="M570 115
+                     C585 102 600 90 614 78
+                     C622 71 620 63 614 60
+                     C606 57 597 64 588 72
+                     L552 104"/>
+
+            <path d="M552 104
+                     C568 88 580 72 590 58
+                     C595 50 592 43 585 41
+                     C577 40 570 47 563 57
+                     L530 98"/>
+
+            <path d="M530 98
+                     C540 81 548 66 552 52
+                     C554 44 550 38 543 38
+                     C535 39 530 46 526 56
+                     L506 100"/>
+
+            <path d="M506 100
+                     C510 84 511 70 509 59
+                     C507 51 501 48 495 51
+                     C489 54 487 62 487 71
+                     L480 110"/>
+
+            <!-- DEDOS -->
+
+            <path d="M480 110
+                     C460 112 444 108 426 99"/>
+
+            <path d="M426 99
+                     C408 90 395 82 384 78"/>
+
+        </svg>
+
+    </div>
+
+
+    <!-- Flor inferior -->
+
+    <svg class="decor flower bottom-left"
+         viewBox="0 0 200 200">
+
+        <path d="M10 190 C30 145 35 100 70 65 C95 40 120 20 155 10"/>
+        <path d="M45 125 C20 115 18 95 30 80 C48 85 57 100 45 125"/>
+        <path d="M62 94 C80 72 98 73 108 87 C92 103 77 105 62 94"/>
+        <path d="M88 62 C80 40 88 25 105 20 C117 38 108 54 88 62"/>
+
+    </svg>
+
+
+    <svg class="decor flower bottom-right"
+         viewBox="0 0 200 200">
+
+        <path d="M10 190 C30 145 35 100 70 65 C95 40 120 20 155 10"/>
+        <path d="M45 125 C20 115 18 95 30 80 C48 85 57 100 45 125"/>
+        <path d="M62 94 C80 72 98 73 108 87 C92 103 77 105 62 94"/>
+        <path d="M88 62 C80 40 88 25 105 20 C117 38 108 54 88 62"/>
+
+    </svg>
+
+</section>
+
+
+<!-- =====================================================
+     CARTA
+===================================================== -->
+
+<section id="carta">
+
+<div class="letter-container">
+
+
+    <!-- FLORES DECORATIVAS -->
+
+    <svg class="letter-flower left"
+         viewBox="0 0 150 300">
+
+        <path d="M70 300 C65 240 80 180 65 120 C58 90 40 55 20 25"/>
+        <path d="M65 160 C40 155 25 140 27 120 C47 120 60 135 65 160"/>
+        <path d="M70 200 C95 190 110 175 107 155 C87 160 75 175 70 200"/>
+        <path d="M64 110 C40 100 28 82 34 65 C52 70 63 85 64 110"/>
+        <path d="M75 75 C94 63 104 48 98 32 C81 39 74 53 75 75"/>
+
+    </svg>
+
+
+    <svg class="letter-flower right"
+         viewBox="0 0 150 300">
+
+        <path d="M70 300 C65 240 80 180 65 120 C58 90 40 55 20 25"/>
+        <path d="M65 160 C40 155 25 140 27 120 C47 120 60 135 65 160"/>
+        <path d="M70 200 C95 190 110 175 107 155 C87 160 75 175 70 200"/>
+        <path d="M64 110 C40 100 28 82 34 65 C52 70 63 85 64 110"/>
+        <path d="M75 75 C94 63 104 48 98 32 C81 39 74 53 75 75"/>
+
+    </svg>
+
+
+    <!-- ENCABEZADO -->
+
+    <div class="letter-header">
+
+        <div class="mini-heart">
+            ♡
+        </div>
+
+        <h2>
+            Para ti, Mario
+        </h2>
+
+        <p>
+            algo que quería decirte hace mucho
+        </p>
+
+    </div>
+
+
+    <!-- PARTE I -->
+
+    <div class="letter-section active">
+
+        <div class="section-number">
+            Parte I
+        </div>
+
+        <h3 class="section-title">
+            Mi amor, mi niño hermoso...
+        </h3>
+
+        <p class="letter-text">
+Mi amor mi niño hermoso sabes cuanto te amo y todo lo q haría x ti ? Daría lo q fuera por tenerte a mi lado x probar tus labios y perdernos juntos te amo y amo tu compañía amo cuando ríes amo tu humor amo tus ojos amo tus labios amo cada parte de ti no dejo de ver los videos en los q aparecemos juntos y veo lo feliz q soy a tu lado lo feliz q me hace tenerte en mi vida lo mucho q adoro reír contigo , cada día haces especial mi vida y es muy lindo saber q tengo a alguien q me comprende , es algo fuerte pero agradezco q hagas q la vida se vea linda cuando siento q ya nd tiene solucion , pase por muchas cosas d niña cosas q no te imaginas y q te contaré poco a poco sabes no es fácil aún despierto en la madrugada llorando.
+        </p>
+
+    </div>
+
+
+    <!-- PARTE II -->
+
+    <div class="letter-section">
+
+        <div class="section-number">
+            Parte II
+        </div>
+
+        <h3 class="section-title">
+            Contigo me siento segura
+        </h3>
+
+        <p class="letter-text">
+Leer el chat y ver q contigo estoy segura y q d vrd me amas y me lo demuestras con cada palabra q me dices me calma , siempre senti q solo me querían x mi cuerpo o x como me veía pero tu vez más alla de eso , me vez a mi vez q me gusta q no me gusta ,q siento ,como soy ,q quiero en la vida.
+        </p>
+
+    </div>
+
+
+    <!-- PARTE III -->
+
+    <div class="letter-section">
+
+        <div class="section-number">
+            Parte III
+        </div>
+
+        <h3 class="section-title">
+            Contigo puedo ser yo
+        </h3>
+
+        <p class="letter-text">
+Sabes me di cuenta d q contigo todo se ve mejor contigo siento q puedo ser yo y no nesecito ocultar todo lo q x mucho tiempo afronte sola y no conté lo q calle y x primera vez siento q tengo a alguien que me entiende q sabe quien soy q ve algo en mi q yo aveces no lo reconozco me motivas a ser mejor cada día a sonreír , odiaba como sonreía hasta q llegaste tu con tus chistes sobre mi y tus stickers y me hacías reír en cada clase aún sabiendo q no me gustaba jsjsjs te burlabas de mi Nono dislike 👎 pero dentro q todo cada vez te fuiste apoderando de mi corazón poco a poco conectaba mas contigo y aunq no lo veíamos cada vez éramos más unidos , cada vez q te veía en cámara y veía como jugabas y te matabas de risa cuando los profes estaban hablando serio.
+        </p>
+
+    </div>
+
+
+    <!-- PARTE IV -->
+
+    <div class="letter-section">
+
+        <div class="section-number">
+            Parte IV
+        </div>
+
+        <h3 class="section-title">
+            Sí, me puse celosa
+        </h3>
+
+        <p class="letter-text">
+Me moría de risa y me dabas ternura , recuerdo q m puse celosa de chumpitaz xq publico una llmd y tbm xq sabia q era tu amiga y encima dijiste q era una buena amiga ps Nono malcriado (al final yo soy tu novia 🥰) pero pues no podía reclamar xq era tu vida (decía cuando se moría xq fueras solo d ella Nono esa Zunrey mas sarcástica) mas alla de enamorarme xq lo q senti me enamore de quien eres d como eres atento , cariñoso (ahora xq hace tiempo uy Ño poco más me mandabas a infratierra ) , gracioso , lindo , carismático , disciplinado , estudioso ( cuando quieres ) pero sobre todo el hecho d q fueras empatico y solidario me encanto d ti.
+        </p>
+
+    </div>
+
+
+    <!-- PARTE V -->
+
+    <div class="letter-section">
+
+        <div class="section-number">
+            Parte V
+        </div>
+
+        <h3 class="section-title">
+            Lo que haces en mí
+        </h3>
+
+        <p class="letter-text">
+Ni durante clase te puedo dejar de pensar y es raro xq no Crei q algun dia fuera a encontrar a alguien tan Perfecto como tu q me entiende y me calma logras hacer q cada vez te ame más sabes siento q curas partes q no rompiste y me encanta me siento en calma estar yo en calma es un milagro no sé cómo no vez errores en mi cuando siento q soy d todo menos perfecta aveces me da miedo ser demasiado intensa y agobiarte x eso trato d darte tbm tu espacio te convertiste en una persona muy importante para ti y quiero cuidarte abrazarte estar a tu lado y jamás dejarte darte todo el cariño q te mereces porque eres una persona que se merece lo mejor de este mundo y del siguiente.
+        </p>
+
+    </div>
+
+
+    <!-- PARTE VI -->
+
+    <div class="letter-section">
+
+        <div class="section-number">
+            Parte VI
+        </div>
+
+        <h3 class="section-title">
+            Lo que todavía estoy aprendiendo
+        </h3>
+
+        <p class="letter-text">
+Y digo trato xq enserio q hay veces en las q ni yo me entiendo incluso cuando me fue bien en el dia tiendo a ver mis errores antes q mis logros y se lo q eh logrado pero tbm se q tengo defectos q voy a cambiar x nosotros , xq ya me imaginé una vida entera juntos xq ya no puedo imaginar a otra persona en mi vida q no seas tu , porque muero x formar una familia y hacerlos felices y llenarlos d amor xq te amo Mario te adoro con toda el alma.
+        </p>
+
+    </div>
+
+
+    <!-- PARTE VII -->
+
+    <div class="letter-section">
+
+        <div class="section-number">
+            Parte VII
+        </div>
+
+        <h3 class="section-title">
+            Y todavía hay tanto por vivir
+        </h3>
+
+        <p class="letter-text">
+Cada dia haces mi vida más interesante adoro verte y escuchar tu voz q me calma y me da ternura dios no se q me hiciste cada día te amo mas y mas , gracias por hacerme tan feliz , sabes cuando solo éramos amigos eras una de las personas con las q mas disfrutaba hablar en llmada y sentía q podía pasar horas hablando contigo o haciendo hora y eso se me ah quedado no hay q no quiera escuchar tu voz diciéndome lo mucho q me amas , se que nos espera toda una vida juntos imagina contarle a nuestros hijos q nos conocimos en el colegio y q nos odiábamos a muerte pero poco a poco nos fuimos enamorando y logramos todas nuestras metas juntos , recuerdo cuando veíamos pelis de terror y en vez de asustarme nos matábamos de risa cada 5 segundos JAJSJAJ te adoro mi amor.
+        </p>
+
+    </div>
+
+
+    <!-- FINAL -->
+
+    <div class="letter-section">
+
+        <div class="final-message">
+
+            <div class="big-heart">
                 ♡
             </div>
 
-            <h1>
-                Nuestro primer mes
-            </h1>
+            <h3>
+                Te amo mi niño con toda el alma.
+            </h3>
 
-            <p class="subtitle">
-                Una pequeña sorpresa hecha especialmente para ti.
+            <p>
+                Gracias por ser demostrarme como es ser amada con locura .
             </p>
-
-            <button class="start-button" onclick="comenzar()">
-                COMENZAR
-            </button>
-
-        </main>
-
-    </section>
-
-
-    <!-- CARTA -->
-
-    <section id="carta">
-
-        <div class="letter-container">
-
-            <div class="letter-header">
-
-                <div class="mini-heart">
-                    ♡
-                </div>
-
-                <h2>
-                    Para ti, Mario
-                </h2>
-
-                <p>
-                    algo que quería decirte hace mucho
-                </p>
-
-            </div>
-
-
-            <!-- PARTE 1 -->
-
-            <div class="letter-section active">
-
-                <div class="section-number">
-                    Parte I
-                </div>
-
-                <h3 class="section-title">
-                    Mi amor, mi niño hermoso...
-                </h3>
-
-                <p class="letter-text">Mi amor mi niño hermoso sabes cuanto te amo y todo lo q haría x ti ? Daría lo q fuera por tenerte a mi lado x probar tus labios y perdernos juntos te amo y amo tu compañía amo cuando ríes amo tu humor amo tus ojos amo tus labios amo cada parte de ti no dejo de ver los videos en los q aparecemos juntos y veo lo feliz q soy a tu lado lo feliz q me hace tenerte en mi vida lo mucho q adoro reír contigo , cada día haces especial mi vida y es muy lindo saber q tengo a alguien q me comprende , es algo fuerte pero agradezco q hagas q la vida se vea linda cuando siento q ya nd tiene solucion , pase por muchas cosas d niña cosas q no te imaginas y q te contaré poco a poco sabes no es fácil aún despierto en la madrugada llorando.</p>
-
-            </div>
-
-
-            <!-- PARTE 2 -->
-
-            <div class="letter-section">
-
-                <div class="section-number">
-                    Parte II
-                </div>
-
-                <h3 class="section-title">
-                    Contigo me siento segura
-                </h3>
-
-                <p class="letter-text">Leer el chat y ver q contigo estoy segura y q d vrd me amas y me lo demuestras con cada palabra q me dices me calma , siempre senti q solo me querían x mi cuerpo o x como me veía pero tu vez más alla de eso , me vez a mi vez q me gusta q no me gusta ,q siento ,como soy ,q quiero en la vida.</p>
-
-            </div>
-
-
-            <!-- PARTE 3 -->
-
-            <div class="letter-section">
-
-                <div class="section-number">
-                    Parte III
-                </div>
-
-                <h3 class="section-title">
-                    Contigo puedo ser yo
-                </h3>
-
-                <p class="letter-text">Sabes me di cuenta d q contigo todo se ve mejor contigo siento q puedo ser yo y no nesecito ocultar todo lo q x mucho tiempo afronte sola y no conté lo q calle y x primera vez siento q tengo a alguien que me entiende q sabe quien soy q ve algo en mi q yo aveces no lo reconozco me motivas a ser mejor cada día a sonreír , odiaba como sonreía hasta q llegaste tu con tus chistes sobre mi y tus stickers y me hacías reír en cada clase aún sabiendo q no me gustaba jsjsjs te burlabas de mi Nono dislike 👎 pero dentro q todo cada vez te fuiste apoderando de mi corazón poco a poco conectaba mas contigo y aunq no lo veíamos cada vez éramos más unidos , cada vez q te veía en cámara y veía como jugabas y te matabas de risa cuando los profes estaban hablando serio.</p>
-
-            </div>
-
-
-            <!-- PARTE 4 -->
-
-            <div class="letter-section">
-
-                <div class="section-number">
-                    Parte IV
-                </div>
-
-                <h3 class="section-title">
-                    Sí, me puse celosa
-                </h3>
-
-                <p class="letter-text">Me moría de risa y me dabas ternura , recuerdo q m puse celosa de chumpitaz xq publico una llmd y tbm xq sabia q era tu amiga y encima dijiste q era una buena amiga ps Nono malcriado (al final yo soy tu novia 🥰) pero pues no podía reclamar xq era tu vida (decía cuando se moría xq fueras solo d ella Nono esa Zunrey mas sarcástica) mas alla de enamorarme xq lo q senti me enamore de quien eres d como eres atento , cariñoso (ahora xq hace tiempo uy Ño poco más me mandabas a infratierra ) , gracioso , lindo , carismático , disciplinado , estudioso ( cuando quieres ) pero sobre todo el hecho d q fueras empatico y solidario me encanto d ti.</p>
-
-            </div>
-
-
-            <!-- PARTE 5 -->
-
-            <div class="letter-section">
-
-                <div class="section-number">
-                    Parte V
-                </div>
-
-                <h3 class="section-title">
-                    Lo que haces en mí
-                </h3>
-
-                <p class="letter-text">Ni durante clase te puedo dejar de pensar y es raro xq no Crei q algun dia fuera a encontrar a alguien tan Perfecto como tu q me entiende y me calma logras hacer q cada vez te ame más sabes siento q curas partes q no rompiste y me encanta me siento en calma estar yo en calma es un milagro no sé cómo no vez errores en mi cuando siento q soy d todo menos perfecta aveces me da miedo ser demasiado intensa y agobiarte x eso trato d darte tbm tu espacio te convertiste en una persona muy importante para ti y quiero cuidarte abrazarte estar a tu lado y jamás dejarte darte todo el cariño q te mereces porque eres una persona que se merece lo mejor de este mundo y del siguiente.</p>
-
-            </div>
-
-
-            <!-- PARTE 6 -->
-
-            <div class="letter-section">
-
-                <div class="section-number">
-                    Parte VI
-                </div>
-
-                <h3 class="section-title">
-                    Lo que todavía estoy aprendiendo
-                </h3>
-
-                <p class="letter-text">Y digo trato xq enserio q hay veces en las q ni yo me entiendo incluso cuando me fue bien en el dia tiendo a ver mis errores antes q mis logros y se lo q eh logrado pero tbm se q tengo defectos q voy a cambiar x nosotros , xq ya me imaginé una vida entera juntos xq ya no puedo imaginar a otra persona en mi vida q no seas tu , porque muero x formar una familia y hacerlos felices y llenarlos d amor xq te amo Mario te adoro con toda el alma.</p>
-
-            </div>
-
-
-            <!-- PARTE 7 -->
-
-            <div class="letter-section">
-
-                <div class="section-number">
-                    Parte VII
-                </div>
-
-                <h3 class="section-title">
-                    Y todavía hay tanto por vivir
-                </h3>
-
-                <p class="letter-text">Cada dia haces mi vida más interesante adoro verte y escuchar tu voz q me calma y me da ternura dios no se q me hiciste cada día te amo mas y mas , gracias por hacerme tan feliz , sabes cuando solo éramos amigos eras una de las personas con las q mas disfrutaba hablar en llmada y sentía q podía pasar horas hablando contigo o haciendo hora y eso se me ah quedado no hay q no quiera escuchar tu voz diciéndome lo mucho q me amas , se que nos espera toda una vida juntos imagina contarle a nuestros hijos q nos conocimos en el colegio y q nos odiábamos a muerte pero poco a poco nos fuimos enamorando y logramos todas nuestras metas juntos , recuerdo cuando veíamos pelis de terror y en vez de asustarme nos matábamos de risa cada 5 segundos JAJSJAJ te adoro mi amor.</p>
-
-            </div>
-
-
-            <!-- FINAL -->
-
-            <div class="letter-section">
-
-                <div class="final-message">
-
-                    <div class="big-heart">
-                        ♡
-                    </div>
-
-                    <h3>
-                        Te adoro con toda el alma.
-                    </h3>
-
-                    <p>
-                        Gracias por ser parte de mi primer mes contigo.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <!-- BOTONES -->
-
-            <div class="controls">
-
-                <button
-                    class="back-button"
-                    id="backButton"
-                    onclick="anterior()">
-                    ← ANTERIOR
-                </button>
-
-                <span class="progress" id="progress">
-                    1 / 8
-                </span>
-
-                <button
-                    class="next-button"
-                    id="nextButton"
-                    onclick="siguiente()">
-                    SIGUIENTE →
-                </button>
-
-            </div>
 
         </div>
 
-    </section>
+    </div>
 
 
-    <script>
+    <!-- CONTROLES -->
 
-        let seccionActual = 0;
+    <div class="controls">
 
-        const secciones = document.querySelectorAll(".letter-section");
+        <button
+            class="back-button"
+            id="backButton"
+            onclick="anterior()">
+            ← ANTERIOR
+        </button>
 
-        const portada = document.getElementById("portada");
-        const carta = document.getElementById("carta");
+        <span
+            class="progress"
+            id="progress">
+            1 / 8
+        </span>
 
-        const progress = document.getElementById("progress");
-        const nextButton = document.getElementById("nextButton");
-        const backButton = document.getElementById("backButton");
+        <button
+            class="next-button"
+            id="nextButton"
+            onclick="siguiente()">
+            SIGUIENTE →
+        </button>
+
+    </div>
 
 
-        function comenzar() {
+    <!-- =================================================
+         PLAYLIST
+    ================================================= -->
 
-            portada.style.opacity = "0";
-            portada.style.transform = "translateY(-30px)";
+    <div class="playlist-section">
 
-            setTimeout(() => {
+        <div class="section-number">
+            Un pequeño regalo
+        </div>
 
-                portada.style.display = "none";
-                carta.style.display = "block";
+        <h3 class="section-title">
+            Una playlist para nosotros ♫
+        </h3>
 
-                window.scrollTo({
-                    top: 0,
-                    behavior: "smooth"
-                });
+        <p class="playlist-text">
+            Porque hay canciones que ahora suenan diferente
+            simplemente porque me recuerdan a ti.
+        </p>
 
-            }, 900);
+        <div class="spotify-player">
 
+            <iframe
+                src="https://open.spotify.com/embed/playlist/4uq0c1P4S9yixsXV64wKFX?utm_source=generator"
+                height="352"
+                frameborder="0"
+                allowfullscreen=""
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                loading="lazy">
+            </iframe>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+</section>
+
+
+<script>
+
+/* =====================================================
+   NAVEGACIÓN
+===================================================== */
+
+let seccionActual = 0;
+
+const secciones =
+    document.querySelectorAll(".letter-section");
+
+const portada =
+    document.getElementById("portada");
+
+const carta =
+    document.getElementById("carta");
+
+const progress =
+    document.getElementById("progress");
+
+const nextButton =
+    document.getElementById("nextButton");
+
+const backButton =
+    document.getElementById("backButton");
+
+
+function comenzar() {
+
+    portada.style.opacity = "0";
+    portada.style.transform = "translateY(-35px)";
+
+    setTimeout(() => {
+
+        portada.style.display = "none";
+
+        carta.style.display = "block";
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+
+    }, 900);
+
+}
+
+
+function mostrarSeccion(numero) {
+
+    secciones.forEach((seccion, index) => {
+
+        seccion.classList.remove("active");
+
+        if (index === numero) {
+            seccion.classList.add("active");
         }
 
-
-        function mostrarSeccion(numero) {
-
-            secciones.forEach((seccion, index) => {
-
-                seccion.classList.remove("active");
-
-                if (index === numero) {
-                    seccion.classList.add("active");
-                }
-
-            });
-
-            progress.textContent =
-                (numero + 1) + " / " + secciones.length;
+    });
 
 
-            if (numero === 0) {
-                backButton.style.display = "none";
-            } else {
-                backButton.style.display = "inline-block";
-            }
+    progress.textContent =
+        (numero + 1) +
+        " / " +
+        secciones.length;
 
 
-            if (numero === secciones.length - 1) {
-                nextButton.style.display = "none";
-            } else {
-                nextButton.style.display = "inline-block";
-            }
+    if (numero === 0) {
+
+        backButton.style.display = "none";
+
+    } else {
+
+        backButton.style.display = "inline-block";
+
+    }
 
 
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
+    if (numero === secciones.length - 1) {
 
-        }
+        nextButton.style.display = "none";
 
+    } else {
 
-        function siguiente() {
+        nextButton.style.display = "inline-block";
 
-            if (seccionActual < secciones.length - 1) {
-
-                seccionActual++;
-
-                mostrarSeccion(seccionActual);
-
-            }
-
-        }
+    }
 
 
-        function anterior() {
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
 
-            if (seccionActual > 0) {
-
-                seccionActual--;
-
-                mostrarSeccion(seccionActual);
-
-            }
-
-        }
+}
 
 
-        mostrarSeccion(0);
+function siguiente() {
 
-    </script>
+    if (seccionActual < secciones.length - 1) {
+
+        seccionActual++;
+
+        mostrarSeccion(seccionActual);
+
+    }
+
+}
+
+
+function anterior() {
+
+    if (seccionActual > 0) {
+
+        seccionActual--;
+
+        mostrarSeccion(seccionActual);
+
+    }
+
+}
+
+
+mostrarSeccion(0);
+
+</script>
 
 </body>
 </html>
