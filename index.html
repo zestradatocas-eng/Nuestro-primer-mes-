@@ -22,6 +22,7 @@
             background: radial-gradient(circle at 50% 40%, #24143d 0%, #100b19 45%, #050507 100%);
             color: #f4f1f8;
             overflow-x: hidden;
+            /* AQUÍ ESTABA EL PROBLEMA: QUITAMOS EL overflow: hidden PARA PERMITIR EL SCROLL */
         }
 
         .stars {
@@ -120,10 +121,12 @@
             max-width: 700px;
             margin: 0 auto;
             padding: 5rem 1.5rem;
+            position: relative;
+            z-index: 2;
         }
 
         .parrafo-carta {
-            background: rgba(20, 12, 30, 0.7);
+            background: rgba(20, 12, 30, 0.75);
             border: 1px solid rgba(156, 123, 197, 0.2);
             padding: 2rem;
             border-radius: 16px;
@@ -261,7 +264,7 @@
         <div class="container" style="max-width: 600px;">
             <p class="cierre-texto">“Y si alguna vez dudas de cuánto te amo…”</p>
             <p class="cierre-texto">“vuelve aquí y recuerda que alguien te eligió, te quiere y está muy feliz de tenerte en su vida.”</p>
-            <h2 class="firma-final">Te amo, Mario. ❤️</h2>
+            <h2 class="firma-final">Te amo, Mario. ❤️️</h2>
             
             <div style="margin-top: 1.5rem;">
                 <button class="start-button" onclick="mostrarSorpresa()">Una última cosita…</button>
