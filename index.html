@@ -1,1198 +1,1464 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Nuestro primer mes</title>
-
-<style>
-
-/* =====================================================
-   BASE
-===================================================== */
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-html {
-    scroll-behavior: smooth;
-}
-
-body {
-    min-height: 100vh;
-    background:
-        radial-gradient(
-            circle at 50% 40%,
-            #24143d 0%,
-            #100b19 45%,
-            #050507 100%
-        );
-    color: #f4f1f8;
-    font-family: Georgia, "Times New Roman", serif;
-    overflow-x: hidden;
-}
-
-/* =====================================================
-   ESTRELLAS
-===================================================== */
-
-.stars {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    overflow: hidden;
-    z-index: 0;
-}
-
-.star {
-    position: absolute;
-    width: 2px;
-    height: 2px;
-    background: #ddd5ea;
-    border-radius: 50%;
-    opacity: .5;
-    animation: twinkle 4s infinite ease-in-out;
-}
-
-.star.big {
-    width: 3px;
-    height: 3px;
-}
-
-/* =====================================================
-   DECORACIONES
-===================================================== */
-
-.decor {
-    position: absolute;
-    pointer-events: none;
-    z-index: 1;
-}
-
-.flower {
-    width: 180px;
-    opacity: .65;
-}
-
-.flower path,
-.flower circle {
-    fill: none;
-    stroke: #a88bc8;
-    stroke-width: 1.2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-}
-
-.flower.top-left {
-    top: 0;
-    left: 0;
-}
-
-.flower.top-right {
-    top: 0;
-    right: 0;
-    transform: scaleX(-1);
-}
-
-.flower.bottom-left {
-    bottom: 0;
-    left: 0;
-    transform: scaleY(-1);
-}
-
-.flower.bottom-right {
-    bottom: 0;
-    right: 0;
-    transform: scale(-1);
-}
-
-/* =====================================================
-   LÍNEAS DECORATIVAS
-===================================================== */
-
-.orbit {
-    position: absolute;
-    width: 600px;
-    height: 250px;
-    border: 1px solid rgba(166, 137, 202, .18);
-    border-radius: 50%;
-    transform: rotate(-22deg);
-    pointer-events: none;
-}
-
-.orbit.one {
-    top: 20%;
-    left: -180px;
-}
-
-.orbit.two {
-    bottom: 12%;
-    right: -200px;
-    transform: rotate(25deg);
-}
-
-/* =====================================================
-   LUNA
-===================================================== */
-
-.moon {
-    position: absolute;
-    top: 70px;
-    right: 10%;
-    width: 55px;
-    height: 55px;
-    border-radius: 50%;
-    box-shadow: -10px 4px 0 #a78ac9;
-    transform: rotate(-20deg);
-    opacity: .8;
-}
-
-/* =====================================================
-   PORTADA
-===================================================== */
-
-#portada {
-    min-height: 100vh;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    overflow: hidden;
-    transition: opacity 1s ease, transform 1s ease;
-}
-
-.cover-content {
-    position: relative;
-    z-index: 5;
-    width: min(900px, 92%);
-    padding: 30px;
-    animation: appear 2s ease forwards;
-}
-
-.small-text {
-    font-family: Arial, sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 5px;
-    font-size: 11px;
-    color: #aaa1b8;
-    margin-bottom: 22px;
-}
-
-.cover-heart {
-    font-size: 30px;
-    color: #a98aca;
-    margin-bottom: 18px;
-    animation: pulse 2.5s infinite;
-}
-
-h1 {
-    font-size: clamp(45px, 8vw, 90px);
-    font-weight: normal;
-    letter-spacing: -2px;
-    color: #d8c6ee;
-    margin-bottom: 15px;
-    text-shadow: 0 0 35px rgba(156, 123, 197, .18);
-}
-
-.subtitle {
-    color: #c8bfd3;
-    font-size: 17px;
-    font-style: italic;
-    margin-bottom: 40px;
-}
-
-/* =====================================================
-   MANOS
-===================================================== */
-
-.hands {
-    position: absolute;
-    left: 50%;
-    bottom: 4%;
-    transform: translateX(-50%);
-    width: min(850px, 90vw);
-    height: 260px;
-    z-index: 2;
-    pointer-events: none;
-}
-
-.hands svg {
-    width: 100%;
-    height: 100%;
-    overflow: visible;
-}
-
-.hands path,
-.hands line {
-    fill: none;
-    stroke: #aa8bca;
-    stroke-width: 1.25;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    opacity: .8;
-}
-
-.hand-glow {
-    filter: drop-shadow(0 0 7px rgba(166, 130, 206, .25));
-}
-
-/* =====================================================
-   BOTÓN
-===================================================== */
-
-.start-button,
-.next-button,
-.back-button {
-    position: relative;
-    z-index: 10;
-    border: 1px solid #81758f;
-    background: rgba(255, 255, 255, .025);
-    color: #f4f1f8;
-    padding: 14px 35px;
-    border-radius: 50px;
-    font-size: 11px;
-    letter-spacing: 4px;
-    cursor: pointer;
-    transition: .4s ease;
-}
-
-.start-button:hover,
-.next-button:hover,
-.back-button:hover {
-    background: #7c5aa2;
-    border-color: #cdb8e4;
-    transform: translateY(-3px);
-    box-shadow: 0 10px 35px rgba(124, 90, 162, .35);
-}
-
-/* =====================================================
-   CARTA
-===================================================== */
-
-#carta {
-    display: none;
-    min-height: 100vh;
-    padding: 90px 20px;
-    position: relative;
-    z-index: 3;
-}
-
-.letter-container {
-    width: min(900px, 94%);
-    margin: auto;
-    position: relative;
-}
-
-.letter-header {
-    text-align: center;
-    margin-bottom: 65px;
-}
-
-.letter-header .mini-heart {
-    color: #a98aca;
-    font-size: 25px;
-    margin-bottom: 20px;
-    animation: pulse 2s infinite;
-}
-
-.letter-header h2 {
-    font-size: clamp(38px, 6vw, 62px);
-    font-weight: normal;
-    color: #d8c6ee;
-    margin-bottom: 15px;
-}
-
-.letter-header p {
-    color: #91869f;
-    font-family: Arial, sans-serif;
-    font-size: 11px;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-}
-
-/* =====================================================
-   DECORACIONES DE LA CARTA
-===================================================== */
-
-.letter-flower {
-    position: absolute;
-    width: 150px;
-    opacity: .45;
-    pointer-events: none;
-}
-
-.letter-flower.left {
-    left: -80px;
-    top: 120px;
-}
-
-.letter-flower.right {
-    right: -80px;
-    bottom: 100px;
-    transform: scaleX(-1);
-}
-
-.letter-flower path {
-    fill: none;
-    stroke: #9d80bf;
-    stroke-width: 1.1;
-    stroke-linecap: round;
-}
-
-/* =====================================================
-   SECCIONES
-===================================================== */
-
-.letter-section {
-    display: none;
-    animation: sectionAppear .8s ease forwards;
-    position: relative;
-}
-
-.letter-section.active {
-    display: block;
-}
-
-.section-number {
-    font-family: Arial, sans-serif;
-    color: #9c7bc5;
-    font-size: 10px;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    margin-bottom: 15px;
-}
-
-.section-title {
-    font-size: clamp(28px, 5vw, 43px);
-    font-weight: normal;
-    color: #d7c7e8;
-    margin-bottom: 30px;
-}
-
-.letter-text {
-    color: #ddd8e3;
-    font-size: 18px;
-    line-height: 2;
-}
-
-/* =====================================================
-   CONTROLES
-===================================================== */
-
-.controls {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 18px;
-    margin-top: 60px;
-    flex-wrap: wrap;
-}
-
-.progress {
-    color: #91869f;
-    font-family: Arial, sans-serif;
-    font-size: 11px;
-    letter-spacing: 2px;
-}
-
-/* =====================================================
-   PLAYLIST
-===================================================== */
-
-.playlist-section {
-    margin-top: 110px;
-    padding: 70px 20px;
-    text-align: center;
-    border-top: 1px solid rgba(156, 123, 197, .22);
-    position: relative;
-}
-
-.playlist-text {
-    color: #aaa1b8;
-    font-size: 17px;
-    font-style: italic;
-    line-height: 1.8;
-    max-width: 600px;
-    margin: 0 auto 35px;
-}
-
-.spotify-player {
-    width: min(700px, 100%);
-    margin: auto;
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: 0 20px 60px rgba(0,0,0,.5);
-}
-
-.spotify-player iframe {
-    display: block;
-    width: 100%;
-}
-
-/* =====================================================
-   FINAL
-===================================================== */
-
-.final-message {
-    text-align: center;
-    padding: 50px 0 80px;
-}
-
-.final-message .big-heart {
-    color: #a98aca;
-    font-size: 48px;
-    animation: pulse 2s infinite;
-    margin-bottom: 30px;
-}
-
-.final-message h3 {
-    font-size: clamp(32px, 6vw, 55px);
-    font-weight: normal;
-    color: #d8c6ee;
-    margin-bottom: 25px;
-}
-
-.final-message p {
-    color: #c8bfd3;
-    font-size: 18px;
-    font-style: italic;
-    line-height: 1.9;
-}
-
-/* =====================================================
-   ANIMACIONES
-===================================================== */
-
-@keyframes appear {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes sectionAppear {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes pulse {
-    0%,100% {
-        transform: scale(1);
-        opacity: .7;
-    }
-
-    50% {
-        transform: scale(1.12);
-        opacity: 1;
-    }
-}
-
-@keyframes twinkle {
-    0%,100% {
-        opacity: .15;
-    }
-
-    50% {
-        opacity: .9;
-    }
-}
-
-/* =====================================================
-   MÓVIL
-===================================================== */
-
-@media(max-width: 700px) {
-
-    .hands {
-        width: 100%;
-        bottom: 2%;
-        height: 190px;
-    }
-
-    .moon {
-        right: 8%;
-        top: 40px;
-        width: 40px;
-        height: 40px;
-    }
-
-    .flower {
-        width: 120px;
-    }
-
-    .letter-flower.left {
-        left: -40px;
-    }
-
-    .letter-flower.right {
-        right: -40px;
-    }
-
-    .letter-text {
-        font-size: 16px;
-        line-height: 1.85;
-    }
-
-    #carta {
-        padding-top: 55px;
-    }
-
-}
-
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Nuestro primer mes</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: #030305;
+            color: white;
+            font-family: Arial, sans-serif;
+            overflow-x: hidden;
+        }
+
+
+        /* ========================================
+           PORTADA
+        ======================================== */
+
+        #portada {
+            min-height: 100vh;
+            height: 100vh;
+
+            position: relative;
+            overflow: hidden;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background:
+                radial-gradient(
+                    circle at 50% 42%,
+                    rgba(89, 52, 125, 0.30) 0%,
+                    rgba(39, 20, 61, 0.18) 28%,
+                    rgba(7, 5, 10, 0.92) 67%,
+                    #030305 100%
+                );
+        }
+
+
+        /* ========================================
+           ESTRELLAS DE 4 PUNTAS
+        ======================================== */
+
+        .stars {
+            position: absolute;
+            inset: 0;
+
+            pointer-events: none;
+
+            z-index: 1;
+        }
+
+        .star {
+            position: absolute;
+
+            color: rgba(222, 202, 248, .75);
+
+            font-family: Georgia, serif;
+
+            font-size: 13px;
+
+            text-shadow:
+                0 0 8px rgba(190, 150, 235, .55),
+                0 0 18px rgba(160, 110, 210, .25);
+
+            animation: starGlow 3.5s ease-in-out infinite;
+        }
+
+        .star-1 {
+            top: 12%;
+            left: 16%;
+            font-size: 11px;
+        }
+
+        .star-2 {
+            top: 20%;
+            left: 30%;
+            font-size: 17px;
+            animation-delay: .8s;
+        }
+
+        .star-3 {
+            top: 14%;
+            right: 25%;
+            font-size: 10px;
+            animation-delay: 1.5s;
+        }
+
+        .star-4 {
+            top: 29%;
+            right: 10%;
+            font-size: 15px;
+            animation-delay: 2.2s;
+        }
+
+        .star-5 {
+            top: 47%;
+            left: 8%;
+            font-size: 14px;
+            animation-delay: .5s;
+        }
+
+        .star-6 {
+            top: 55%;
+            right: 15%;
+            font-size: 9px;
+            animation-delay: 1.8s;
+        }
+
+        .star-7 {
+            top: 67%;
+            left: 18%;
+            font-size: 10px;
+            animation-delay: 2.7s;
+        }
+
+        .star-8 {
+            top: 43%;
+            left: 28%;
+            font-size: 7px;
+            animation-delay: 1.2s;
+        }
+
+        .star-9 {
+            top: 73%;
+            right: 25%;
+            font-size: 15px;
+            animation-delay: .3s;
+        }
+
+        .star-10 {
+            top: 35%;
+            left: 13%;
+            font-size: 7px;
+            animation-delay: 2.5s;
+        }
+
+        .star-11 {
+            top: 62%;
+            right: 31%;
+            font-size: 8px;
+            animation-delay: 1s;
+        }
+
+        .star-12 {
+            top: 82%;
+            left: 38%;
+            font-size: 7px;
+            animation-delay: 2s;
+        }
+
+        @keyframes starGlow {
+
+            0%, 100% {
+                opacity: .25;
+                transform: scale(.75) rotate(0deg);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.2) rotate(45deg);
+            }
+        }
+
+
+        /* ========================================
+           FLORES FINAS
+        ======================================== */
+
+        .flower {
+            position: absolute;
+
+            width: 190px;
+            height: 190px;
+
+            fill: none;
+
+            stroke: rgba(190, 155, 235, .32);
+
+            stroke-width: 1.1;
+
+            filter:
+                drop-shadow(
+                    0 0 8px rgba(150, 100, 220, .12)
+                );
+
+            pointer-events: none;
+
+            z-index: 2;
+        }
+
+        .flower-left {
+            top: -8px;
+            left: -18px;
+        }
+
+        .flower-right {
+            top: -8px;
+            right: -18px;
+
+            transform: scaleX(-1);
+        }
+
+
+        /* ========================================
+           LUNA
+        ======================================== */
+
+        .moon {
+            position: absolute;
+
+            top: 10%;
+            right: 15%;
+
+            width: 42px;
+            height: 42px;
+
+            border-radius: 50%;
+
+            background: rgba(225, 211, 245, .9);
+
+            box-shadow:
+                0 0 20px rgba(191, 153, 240, .25),
+                0 0 50px rgba(120, 70, 180, .12);
+
+            z-index: 2;
+        }
+
+        .moon-cut {
+            position: absolute;
+
+            width: 42px;
+            height: 42px;
+
+            border-radius: 50%;
+
+            background: #08060b;
+
+            left: 12px;
+            top: -5px;
+        }
+
+
+        /* ========================================
+           ÓRBITAS
+        ======================================== */
+
+        .orbit {
+            position: absolute;
+
+            width: 650px;
+            height: 180px;
+
+            border:
+                1px solid rgba(177, 132, 220, .12);
+
+            border-radius: 50%;
+
+            pointer-events: none;
+
+            z-index: 1;
+        }
+
+        .orbit-one {
+            transform: rotate(-15deg);
+        }
+
+        .orbit-two {
+            transform: rotate(18deg);
+
+            width: 720px;
+            height: 230px;
+
+            border-color:
+                rgba(210, 180, 245, .07);
+        }
+
+
+        /* ========================================
+           CONTENIDO CENTRAL
+        ======================================== */
+
+        .cover-content {
+            position: relative;
+
+            z-index: 10;
+
+            text-align: center;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            margin-top: -90px;
+
+            animation: appear 1.5s ease;
+        }
+
+        @keyframes appear {
+
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+
+        .small-title {
+            font-family: Arial, sans-serif;
+
+            font-size: 10px;
+
+            letter-spacing: 5px;
+
+            color:
+                rgba(215, 193, 240, .65);
+
+            margin-bottom: 17px;
+        }
+
+
+        .tiny-line {
+            width: 45px;
+            height: 1px;
+
+            background:
+                rgba(210, 180, 240, .55);
+
+            margin-bottom: 23px;
+        }
+
+
+        .cover-content h1 {
+            margin: 0;
+
+            font-family: Georgia, serif;
+
+            font-size: clamp(52px, 8vw, 88px);
+
+            line-height: .91;
+
+            font-weight: 400;
+
+            letter-spacing: -3px;
+
+            color: #f3edf8;
+
+            text-shadow:
+                0 0 25px rgba(180, 130, 230, .15);
+        }
+
+        .cover-content h1 span {
+            font-style: italic;
+
+            color: #c7a9df;
+        }
+
+
+        .cover-text {
+            margin-top: 25px;
+
+            font-family: Arial, sans-serif;
+
+            font-size: 13px;
+
+            letter-spacing: 1px;
+
+            color:
+                rgba(230, 220, 238, .65);
+        }
+
+
+        /* ========================================
+           BOTÓN COMENZAR
+        ======================================== */
+
+        .start-button {
+            margin-top: 32px;
+
+            position: relative;
+
+            z-index: 20;
+
+            padding: 14px 34px;
+
+            border-radius: 50px;
+
+            border:
+                1px solid rgba(204, 172, 235, .5);
+
+            background:
+                rgba(19, 12, 27, .72);
+
+            color: #eee5f5;
+
+            font-size: 11px;
+
+            letter-spacing: 4px;
+
+            cursor: pointer;
+
+            backdrop-filter: blur(10px);
+
+            transition:
+                transform .3s ease,
+                background .3s ease,
+                box-shadow .3s ease;
+        }
+
+        .start-button span {
+            margin-left: 8px;
+
+            font-size: 14px;
+        }
+
+        .start-button:hover {
+            transform: translateY(-3px);
+
+            background:
+                rgba(91, 53, 119, .35);
+
+            box-shadow:
+                0 8px 30px
+                rgba(126, 76, 165, .22);
+        }
+
+
+        /* ========================================
+           MANOS
+        ======================================== */
+
+        .hands {
+            position: absolute;
+
+            width: min(720px, 85vw);
+
+            left: 50%;
+
+            transform: translateX(-50%);
+
+            bottom: 3%;
+
+            z-index: 3;
+
+            opacity: .68;
+
+            pointer-events: none;
+        }
+
+        .hands svg {
+            width: 100%;
+            height: auto;
+        }
+
+        .hand-line {
+            fill:
+                rgba(116, 78, 148, .08);
+
+            stroke:
+                rgba(194, 157, 225, .58);
+
+            stroke-width: 1.1;
+
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .finger-line {
+            fill: none;
+
+            stroke:
+                rgba(213, 181, 238, .45);
+
+            stroke-width: 1;
+
+            stroke-linecap: round;
+        }
+
+
+        /* ========================================
+           FECHA
+        ======================================== */
+
+        .bottom-note {
+            position: absolute;
+
+            bottom: 18px;
+
+            left: 50%;
+
+            transform: translateX(-50%);
+
+            font-family: Arial, sans-serif;
+
+            font-size: 8px;
+
+            letter-spacing: 4px;
+
+            color:
+                rgba(190, 165, 215, .32);
+
+            z-index: 5;
+        }
+
+
+        /* ========================================
+           CARTA
+        ======================================== */
+
+        #carta {
+            min-height: 100vh;
+
+            padding: 100px 20px;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    #030305 0%,
+                    #0b0710 50%,
+                    #030305 100%
+                );
+
+            position: relative;
+        }
+
+        .letter-container {
+            max-width: 850px;
+
+            margin: auto;
+
+            position: relative;
+
+            padding: 60px 35px;
+
+            border:
+                1px solid rgba(185, 145, 220, .18);
+
+            background:
+                rgba(15, 9, 22, .65);
+
+            box-shadow:
+                0 0 80px
+                rgba(90, 40, 130, .12);
+
+            backdrop-filter: blur(12px);
+        }
+
+
+        .letter-title {
+            text-align: center;
+
+            font-family: Georgia, serif;
+
+            font-size: 42px;
+
+            font-weight: normal;
+
+            color: #d5b9eb;
+
+            margin-bottom: 10px;
+        }
+
+        .letter-subtitle {
+            text-align: center;
+
+            font-size: 11px;
+
+            letter-spacing: 3px;
+
+            color:
+                rgba(220, 200, 235, .45);
+
+            margin-bottom: 50px;
+        }
+
+
+        .letter-section {
+            display: none;
+
+            animation: letterAppear .8s ease;
+        }
+
+        .letter-section.active {
+            display: block;
+        }
+
+        @keyframes letterAppear {
+
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+
+        .letter-section h2 {
+            font-family: Georgia, serif;
+
+            font-size: 27px;
+
+            font-weight: normal;
+
+            color: #cdb0e5;
+
+            margin-bottom: 25px;
+
+            text-align: center;
+        }
+
+        .letter-section p {
+            font-family: Georgia, serif;
+
+            font-size: 17px;
+
+            line-height: 1.9;
+
+            color:
+                rgba(245, 238, 249, .82);
+
+            white-space: pre-line;
+
+            text-align: left;
+        }
+
+
+        /* ========================================
+           NAVEGACIÓN CARTA
+        ======================================== */
+
+        .letter-navigation {
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            gap: 20px;
+
+            margin-top: 50px;
+        }
+
+        .letter-navigation button {
+            padding: 11px 24px;
+
+            border-radius: 30px;
+
+            border:
+                1px solid rgba(195, 158, 225, .35);
+
+            background:
+                rgba(35, 20, 45, .7);
+
+            color: #e9ddf0;
+
+            cursor: pointer;
+
+            font-size: 11px;
+
+            letter-spacing: 2px;
+
+            transition: .3s;
+        }
+
+        .letter-navigation button:hover {
+            background:
+                rgba(105, 63, 135, .35);
+
+            transform: translateY(-2px);
+        }
+
+        #pageNumber {
+            font-size: 10px;
+
+            letter-spacing: 2px;
+
+            color:
+                rgba(220, 200, 235, .4);
+        }
+
+
+        /* ========================================
+           MENSAJE FINAL
+        ======================================== */
+
+        .final-message {
+            text-align: center;
+
+            padding: 20px;
+        }
+
+        .big-heart {
+            font-size: 65px;
+
+            color: #c5a1df;
+
+            animation: heartbeat 2s infinite;
+
+            margin-bottom: 25px;
+        }
+
+        @keyframes heartbeat {
+
+            0%, 100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.08);
+            }
+        }
+
+        .final-message h3 {
+            font-family: Georgia, serif;
+
+            font-size: 38px;
+
+            font-weight: normal;
+
+            font-style: italic;
+
+            color: #d6b8eb;
+
+            margin-bottom: 20px;
+        }
+
+        .final-message p {
+            font-family: Georgia, serif;
+
+            color:
+                rgba(240, 230, 245, .6);
+
+            font-size: 15px;
+
+            line-height: 1.7;
+        }
+
+
+        /* ========================================
+           PLAYLIST
+        ======================================== */
+
+        #playlist {
+            min-height: 100vh;
+
+            padding: 100px 20px;
+
+            background:
+                radial-gradient(
+                    circle at center,
+                    rgba(65, 35, 85, .25),
+                    #030305 65%
+                );
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+        }
+
+        .playlist-container {
+            width: 100%;
+
+            max-width: 850px;
+
+            text-align: center;
+        }
+
+        .playlist-container h2 {
+            font-family: Georgia, serif;
+
+            font-size: 42px;
+
+            font-weight: normal;
+
+            color: #d5b9eb;
+
+            margin-bottom: 12px;
+        }
+
+        .playlist-container > p {
+            font-size: 12px;
+
+            letter-spacing: 2px;
+
+            color:
+                rgba(225, 210, 235, .45);
+
+            margin-bottom: 35px;
+        }
+
+        .spotify-player {
+            width: 100%;
+
+            max-width: 700px;
+
+            margin: auto;
+
+            border-radius: 15px;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 20px 60px
+                rgba(0, 0, 0, .45);
+        }
+
+        .spotify-player iframe {
+            display: block;
+
+            width: 100%;
+
+            border: none;
+        }
+
+
+        /* ========================================
+           RESPONSIVE
+        ======================================== */
+
+        @media (max-width: 600px) {
+
+            .cover-content {
+                margin-top: -70px;
+            }
+
+            .small-title {
+                font-size: 8px;
+
+                letter-spacing: 3px;
+            }
+
+            .cover-content h1 {
+                font-size: 54px;
+            }
+
+            .cover-text {
+                font-size: 11px;
+            }
+
+            .hands {
+                width: 100%;
+
+                bottom: 5%;
+            }
+
+            .flower {
+                width: 140px;
+                height: 140px;
+            }
+
+            .moon {
+                right: 10%;
+
+                top: 12%;
+
+                width: 32px;
+                height: 32px;
+            }
+
+            .moon-cut {
+                width: 32px;
+                height: 32px;
+
+                left: 9px;
+                top: -4px;
+            }
+
+            .letter-container {
+                padding: 40px 22px;
+            }
+
+            .letter-title {
+                font-size: 34px;
+            }
+
+            .letter-section h2 {
+                font-size: 23px;
+            }
+
+            .letter-section p {
+                font-size: 15px;
+
+                line-height: 1.8;
+            }
+
+            .final-message h3 {
+                font-size: 31px;
+            }
+        }
+
+    </style>
 </head>
 
 
 <body>
 
 
-<!-- =====================================================
-     ESTRELLAS
-===================================================== -->
+    <!-- ========================================
+         PORTADA
+    ======================================== -->
 
-<div class="stars">
-
-    <span class="star" style="top:10%;left:12%;"></span>
-    <span class="star" style="top:20%;left:80%;animation-delay:1s;"></span>
-    <span class="star big" style="top:30%;left:55%;animation-delay:2s;"></span>
-    <span class="star" style="top:45%;left:8%;animation-delay:.5s;"></span>
-    <span class="star" style="top:60%;left:90%;animation-delay:1.5s;"></span>
-    <span class="star" style="top:75%;left:20%;animation-delay:2s;"></span>
-    <span class="star big" style="top:82%;left:70%;animation-delay:.7s;"></span>
-    <span class="star" style="top:15%;left:50%;animation-delay:1.7s;"></span>
-    <span class="star" style="top:68%;left:50%;animation-delay:2.4s;"></span>
-    <span class="star" style="top:38%;left:94%;animation-delay:.8s;"></span>
-
-</div>
+    <section id="portada">
 
 
-<!-- =====================================================
-     PORTADA
-===================================================== -->
+        <!-- ESTRELLAS DE 4 PUNTAS -->
 
-<section id="portada">
+        <div class="stars">
 
+            <span class="star star-1">✦</span>
+            <span class="star star-2">✦</span>
+            <span class="star star-3">✦</span>
+            <span class="star star-4">✦</span>
+            <span class="star star-5">✦</span>
+            <span class="star star-6">✦</span>
+            <span class="star star-7">✦</span>
+            <span class="star star-8">✦</span>
+            <span class="star star-9">✦</span>
+            <span class="star star-10">✦</span>
+            <span class="star star-11">✦</span>
+            <span class="star star-12">✦</span>
 
-    <!-- Luna -->
-
-    <div class="moon"></div>
-
-
-    <!-- Órbitas -->
-
-    <div class="orbit one"></div>
-    <div class="orbit two"></div>
-
-
-    <!-- Flor esquina superior izquierda -->
-
-    <svg class="decor flower top-left"
-         viewBox="0 0 200 200">
-
-        <path d="M10 190 C30 145 35 100 70 65 C95 40 120 20 155 10"/>
-        <path d="M45 125 C20 115 18 95 30 80 C48 85 57 100 45 125"/>
-        <path d="M62 94 C80 72 98 73 108 87 C92 103 77 105 62 94"/>
-        <path d="M88 62 C80 40 88 25 105 20 C117 38 108 54 88 62"/>
-        <path d="M35 150 C15 150 7 138 12 125 C28 126 38 135 35 150"/>
-
-        <circle cx="105" cy="20" r="3"/>
-
-    </svg>
-
-
-    <!-- Flor esquina superior derecha -->
-
-    <svg class="decor flower top-right"
-         viewBox="0 0 200 200">
-
-        <path d="M10 190 C30 145 35 100 70 65 C95 40 120 20 155 10"/>
-        <path d="M45 125 C20 115 18 95 30 80 C48 85 57 100 45 125"/>
-        <path d="M62 94 C80 72 98 73 108 87 C92 103 77 105 62 94"/>
-        <path d="M88 62 C80 40 88 25 105 20 C117 38 108 54 88 62"/>
-        <path d="M35 150 C15 150 7 138 12 125 C28 126 38 135 35 150"/>
-
-    </svg>
-
-
-    <!-- =================================================
-         CONTENIDO CENTRAL
-    ================================================= -->
-
-    <div class="cover-content">
-
-        <div class="small-text">
-            para mi persona favorita
         </div>
 
-        <div class="cover-heart">
-            ♡
-        </div>
 
-        <h1>
-            Nuestro primer mes
-        </h1>
+        <!-- FLORES -->
 
-        <p class="subtitle">
-            Una pequeña sorpresa hecha especialmente para ti.
-        </p>
+        <svg class="flower flower-left" viewBox="0 0 180 180">
 
-        <button class="start-button"
-                onclick="comenzar()">
-            COMENZAR →
-        </button>
+            <path d="
+                M15 150
+                C55 125, 45 75, 85 45
+                C110 27, 130 30, 155 12
+            "/>
 
-    </div>
+            <path d="
+                M58 105
+                C40 92, 35 72, 45 57
+                C62 65, 68 84, 58 105
+            "/>
 
+            <path d="
+                M82 78
+                C105 67, 122 70, 132 86
+                C112 94, 95 90, 82 78
+            "/>
 
-    <!-- =================================================
-         MANOS
-    ================================================= -->
-
-    <div class="hands">
-
-        <svg viewBox="0 0 900 300"
-             class="hand-glow">
-
-            <!-- BRAZO IZQUIERDO -->
-
-            <path d="M20 250
-                     C80 230 125 205 165 175
-                     C205 145 240 115 280 105"/>
-
-            <!-- MANO IZQUIERDA -->
-
-            <path d="M280 105
-                     C300 100 318 105 330 115
-                     C342 124 355 128 370 125"/>
-
-            <path d="M330 115
-                     C315 102 300 90 286 78
-                     C278 71 280 63 286 60
-                     C294 57 303 64 312 72
-                     L348 104"/>
-
-            <path d="M348 104
-                     C332 88 320 72 310 58
-                     C305 50 308 43 315 41
-                     C323 40 330 47 337 57
-                     L370 98"/>
-
-            <path d="M370 98
-                     C360 81 352 66 348 52
-                     C346 44 350 38 357 38
-                     C365 39 370 46 374 56
-                     L394 100"/>
-
-            <path d="M394 100
-                     C390 84 389 70 391 59
-                     C393 51 399 48 405 51
-                     C411 54 413 62 413 71
-                     L420 110"/>
-
-            <!-- DEDOS ACERCÁNDOSE -->
-
-            <path d="M420 110
-                     C440 112 456 108 474 99"/>
-
-            <path d="M474 99
-                     C492 90 505 82 516 78"/>
-
-
-            <!-- BRAZO DERECHO -->
-
-            <path d="M880 250
-                     C820 230 775 205 735 175
-                     C695 145 660 115 620 105"/>
-
-            <!-- MANO DERECHA -->
-
-            <path d="M620 105
-                     C600 100 582 105 570 115
-                     C558 124 545 128 530 125"/>
-
-            <path d="M570 115
-                     C585 102 600 90 614 78
-                     C622 71 620 63 614 60
-                     C606 57 597 64 588 72
-                     L552 104"/>
-
-            <path d="M552 104
-                     C568 88 580 72 590 58
-                     C595 50 592 43 585 41
-                     C577 40 570 47 563 57
-                     L530 98"/>
-
-            <path d="M530 98
-                     C540 81 548 66 552 52
-                     C554 44 550 38 543 38
-                     C535 39 530 46 526 56
-                     L506 100"/>
-
-            <path d="M506 100
-                     C510 84 511 70 509 59
-                     C507 51 501 48 495 51
-                     C489 54 487 62 487 71
-                     L480 110"/>
-
-            <!-- DEDOS -->
-
-            <path d="M480 110
-                     C460 112 444 108 426 99"/>
-
-            <path d="M426 99
-                     C408 90 395 82 384 78"/>
+            <path d="
+                M45 125
+                C28 116, 22 99, 28 85
+                C45 94, 52 108, 45 125
+            "/>
 
         </svg>
 
-    </div>
+
+        <svg class="flower flower-right" viewBox="0 0 180 180">
+
+            <path d="
+                M165 150
+                C125 125, 135 75, 95 45
+                C70 27, 50 30, 25 12
+            "/>
+
+            <path d="
+                M122 105
+                C140 92, 145 72, 135 57
+                C118 65, 112 84, 122 105
+            "/>
+
+            <path d="
+                M98 78
+                C75 67, 58 70, 48 86
+                C68 94, 85 90, 98 78
+            "/>
+
+            <path d="
+                M135 125
+                C152 116, 158 99, 152 85
+                C135 94, 128 108, 135 125
+            "/>
+
+        </svg>
 
 
-    <!-- Flor inferior -->
+        <!-- LUNA -->
 
-    <svg class="decor flower bottom-left"
-         viewBox="0 0 200 200">
-
-        <path d="M10 190 C30 145 35 100 70 65 C95 40 120 20 155 10"/>
-        <path d="M45 125 C20 115 18 95 30 80 C48 85 57 100 45 125"/>
-        <path d="M62 94 C80 72 98 73 108 87 C92 103 77 105 62 94"/>
-        <path d="M88 62 C80 40 88 25 105 20 C117 38 108 54 88 62"/>
-
-    </svg>
-
-
-    <svg class="decor flower bottom-right"
-         viewBox="0 0 200 200">
-
-        <path d="M10 190 C30 145 35 100 70 65 C95 40 120 20 155 10"/>
-        <path d="M45 125 C20 115 18 95 30 80 C48 85 57 100 45 125"/>
-        <path d="M62 94 C80 72 98 73 108 87 C92 103 77 105 62 94"/>
-        <path d="M88 62 C80 40 88 25 105 20 C117 38 108 54 88 62"/>
-
-    </svg>
-
-</section>
-
-
-<!-- =====================================================
-     CARTA
-===================================================== -->
-
-<section id="carta">
-
-<div class="letter-container">
-
-
-    <!-- FLORES DECORATIVAS -->
-
-    <svg class="letter-flower left"
-         viewBox="0 0 150 300">
-
-        <path d="M70 300 C65 240 80 180 65 120 C58 90 40 55 20 25"/>
-        <path d="M65 160 C40 155 25 140 27 120 C47 120 60 135 65 160"/>
-        <path d="M70 200 C95 190 110 175 107 155 C87 160 75 175 70 200"/>
-        <path d="M64 110 C40 100 28 82 34 65 C52 70 63 85 64 110"/>
-        <path d="M75 75 C94 63 104 48 98 32 C81 39 74 53 75 75"/>
-
-    </svg>
-
-
-    <svg class="letter-flower right"
-         viewBox="0 0 150 300">
-
-        <path d="M70 300 C65 240 80 180 65 120 C58 90 40 55 20 25"/>
-        <path d="M65 160 C40 155 25 140 27 120 C47 120 60 135 65 160"/>
-        <path d="M70 200 C95 190 110 175 107 155 C87 160 75 175 70 200"/>
-        <path d="M64 110 C40 100 28 82 34 65 C52 70 63 85 64 110"/>
-        <path d="M75 75 C94 63 104 48 98 32 C81 39 74 53 75 75"/>
-
-    </svg>
-
-
-    <!-- ENCABEZADO -->
-
-    <div class="letter-header">
-
-        <div class="mini-heart">
-            ♡
+        <div class="moon">
+            <div class="moon-cut"></div>
         </div>
 
-        <h2>
-            Para ti, Mario
-        </h2>
 
-        <p>
-            algo que quería decirte hace mucho
-        </p>
+        <!-- ÓRBITAS -->
 
-    </div>
+        <div class="orbit orbit-one"></div>
+        <div class="orbit orbit-two"></div>
 
 
-    <!-- PARTE I -->
+        <!-- CONTENIDO -->
 
-    <div class="letter-section active">
+        <div class="cover-content">
 
-        <div class="section-number">
-            Parte I
-        </div>
-
-        <h3 class="section-title">
-            Mi amor, mi niño hermoso...
-        </h3>
-
-        <p class="letter-text">
-Mi amor mi niño hermoso sabes cuanto te amo y todo lo q haría x ti ? Daría lo q fuera por tenerte a mi lado x probar tus labios y perdernos juntos te amo y amo tu compañía amo cuando ríes amo tu humor amo tus ojos amo tus labios amo cada parte de ti no dejo de ver los videos en los q aparecemos juntos y veo lo feliz q soy a tu lado lo feliz q me hace tenerte en mi vida lo mucho q adoro reír contigo , cada día haces especial mi vida y es muy lindo saber q tengo a alguien q me comprende , es algo fuerte pero agradezco q hagas q la vida se vea linda cuando siento q ya nd tiene solucion , pase por muchas cosas d niña cosas q no te imaginas y q te contaré poco a poco sabes no es fácil aún despierto en la madrugada llorando.
-        </p>
-
-    </div>
-
-
-    <!-- PARTE II -->
-
-    <div class="letter-section">
-
-        <div class="section-number">
-            Parte II
-        </div>
-
-        <h3 class="section-title">
-            Contigo me siento segura
-        </h3>
-
-        <p class="letter-text">
-Leer el chat y ver q contigo estoy segura y q d vrd me amas y me lo demuestras con cada palabra q me dices me calma , siempre senti q solo me querían x mi cuerpo o x como me veía pero tu vez más alla de eso , me vez a mi vez q me gusta q no me gusta ,q siento ,como soy ,q quiero en la vida.
-        </p>
-
-    </div>
-
-
-    <!-- PARTE III -->
-
-    <div class="letter-section">
-
-        <div class="section-number">
-            Parte III
-        </div>
-
-        <h3 class="section-title">
-            Contigo puedo ser yo
-        </h3>
-
-        <p class="letter-text">
-Sabes me di cuenta d q contigo todo se ve mejor contigo siento q puedo ser yo y no nesecito ocultar todo lo q x mucho tiempo afronte sola y no conté lo q calle y x primera vez siento q tengo a alguien que me entiende q sabe quien soy q ve algo en mi q yo aveces no lo reconozco me motivas a ser mejor cada día a sonreír , odiaba como sonreía hasta q llegaste tu con tus chistes sobre mi y tus stickers y me hacías reír en cada clase aún sabiendo q no me gustaba jsjsjs te burlabas de mi Nono dislike 👎 pero dentro q todo cada vez te fuiste apoderando de mi corazón poco a poco conectaba mas contigo y aunq no lo veíamos cada vez éramos más unidos , cada vez q te veía en cámara y veía como jugabas y te matabas de risa cuando los profes estaban hablando serio.
-        </p>
-
-    </div>
-
-
-    <!-- PARTE IV -->
-
-    <div class="letter-section">
-
-        <div class="section-number">
-            Parte IV
-        </div>
-
-        <h3 class="section-title">
-            Sí, me puse celosa
-        </h3>
-
-        <p class="letter-text">
-Me moría de risa y me dabas ternura , recuerdo q m puse celosa de chumpitaz xq publico una llmd y tbm xq sabia q era tu amiga y encima dijiste q era una buena amiga ps Nono malcriado (al final yo soy tu novia 🥰) pero pues no podía reclamar xq era tu vida (decía cuando se moría xq fueras solo d ella Nono esa Zunrey mas sarcástica) mas alla de enamorarme xq lo q senti me enamore de quien eres d como eres atento , cariñoso (ahora xq hace tiempo uy Ño poco más me mandabas a infratierra ) , gracioso , lindo , carismático , disciplinado , estudioso ( cuando quieres ) pero sobre todo el hecho d q fueras empatico y solidario me encanto d ti.
-        </p>
-
-    </div>
-
-
-    <!-- PARTE V -->
-
-    <div class="letter-section">
-
-        <div class="section-number">
-            Parte V
-        </div>
-
-        <h3 class="section-title">
-            Lo que haces en mí
-        </h3>
-
-        <p class="letter-text">
-Ni durante clase te puedo dejar de pensar y es raro xq no Crei q algun dia fuera a encontrar a alguien tan Perfecto como tu q me entiende y me calma logras hacer q cada vez te ame más sabes siento q curas partes q no rompiste y me encanta me siento en calma estar yo en calma es un milagro no sé cómo no vez errores en mi cuando siento q soy d todo menos perfecta aveces me da miedo ser demasiado intensa y agobiarte x eso trato d darte tbm tu espacio te convertiste en una persona muy importante para ti y quiero cuidarte abrazarte estar a tu lado y jamás dejarte darte todo el cariño q te mereces porque eres una persona que se merece lo mejor de este mundo y del siguiente.
-        </p>
-
-    </div>
-
-
-    <!-- PARTE VI -->
-
-    <div class="letter-section">
-
-        <div class="section-number">
-            Parte VI
-        </div>
-
-        <h3 class="section-title">
-            Lo que todavía estoy aprendiendo
-        </h3>
-
-        <p class="letter-text">
-Y digo trato xq enserio q hay veces en las q ni yo me entiendo incluso cuando me fue bien en el dia tiendo a ver mis errores antes q mis logros y se lo q eh logrado pero tbm se q tengo defectos q voy a cambiar x nosotros , xq ya me imaginé una vida entera juntos xq ya no puedo imaginar a otra persona en mi vida q no seas tu , porque muero x formar una familia y hacerlos felices y llenarlos d amor xq te amo Mario te adoro con toda el alma.
-        </p>
-
-    </div>
-
-
-    <!-- PARTE VII -->
-
-    <div class="letter-section">
-
-        <div class="section-number">
-            Parte VII
-        </div>
-
-        <h3 class="section-title">
-            Y todavía hay tanto por vivir
-        </h3>
-
-        <p class="letter-text">
-Cada dia haces mi vida más interesante adoro verte y escuchar tu voz q me calma y me da ternura dios no se q me hiciste cada día te amo mas y mas , gracias por hacerme tan feliz , sabes cuando solo éramos amigos eras una de las personas con las q mas disfrutaba hablar en llmada y sentía q podía pasar horas hablando contigo o haciendo hora y eso se me ah quedado no hay q no quiera escuchar tu voz diciéndome lo mucho q me amas , se que nos espera toda una vida juntos imagina contarle a nuestros hijos q nos conocimos en el colegio y q nos odiábamos a muerte pero poco a poco nos fuimos enamorando y logramos todas nuestras metas juntos , recuerdo cuando veíamos pelis de terror y en vez de asustarme nos matábamos de risa cada 5 segundos JAJSJAJ te adoro mi amor.
-        </p>
-
-    </div>
-
-
-    <!-- FINAL -->
-
-    <div class="letter-section">
-
-        <div class="final-message">
-
-            <div class="big-heart">
-                ♡
-            </div>
-
-            <h3>
-                Te amo mi niño con toda el alma.
-            </h3>
-
-            <p>
-                Gracias por ser demostrarme como es ser amada con locura .
+            <p class="small-title">
+                PARA MI PERSONA FAVORITA
             </p>
 
+            <div class="tiny-line"></div>
+
+            <h1>
+                Nuestro<br>
+                <span>primer mes</span>
+            </h1>
+
+            <p class="cover-text">
+                Una pequeña sorpresa hecha especialmente para ti.
+            </p>
+
+            <button
+                class="start-button"
+                onclick="comenzar()">
+
+                COMENZAR
+                <span>♡</span>
+
+            </button>
+
         </div>
 
-    </div>
+
+        <!-- MANOS ABAJO -->
+
+        <div class="hands">
+
+            <svg viewBox="0 0 700 190">
+
+                <!-- MANO IZQUIERDA -->
+
+                <path
+                    class="hand-line"
+                    d="
+                    M35 155
+                    C75 145, 105 125, 135 105
+                    C155 92, 172 78, 185 65
+                    C193 57, 202 60, 205 68
+                    C207 76, 199 86, 190 94
+                    C211 78, 226 67, 234 72
+                    C242 77, 238 87, 229 97
+                    C250 82, 263 76, 270 83
+                    C276 90, 268 99, 257 108
+                    C275 99, 286 98, 291 105
+                    C296 113, 284 122, 272 130
+                    C244 148, 216 163, 183 170
+                    C130 181, 80 174, 35 155 Z
+                " />
 
 
-    <!-- CONTROLES -->
+                <!-- MANO DERECHA -->
 
-    <div class="controls">
-
-        <button
-            class="back-button"
-            id="backButton"
-            onclick="anterior()">
-            ← ANTERIOR
-        </button>
-
-        <span
-            class="progress"
-            id="progress">
-            1 / 8
-        </span>
-
-        <button
-            class="next-button"
-            id="nextButton"
-            onclick="siguiente()">
-            SIGUIENTE →
-        </button>
-
-    </div>
+                <path
+                    class="hand-line"
+                    d="
+                    M665 155
+                    C625 145, 595 125, 565 105
+                    C545 92, 528 78, 515 65
+                    C507 57, 498 60, 495 68
+                    C493 76, 501 86, 510 94
+                    C489 78, 474 67, 466 72
+                    C458 77, 462 87, 471 97
+                    C450 82, 437 76, 430 83
+                    C424 90, 432 99, 443 108
+                    C425 99, 414 98, 409 105
+                    C404 113, 416 122, 428 130
+                    C456 148, 484 163, 517 170
+                    C570 181, 620 174, 665 155 Z
+                " />
 
 
-    <!-- =================================================
+                <path
+                    class="finger-line"
+                    d="
+                    M190 94
+                    C205 100, 218 107, 230 115
+                " />
+
+                <path
+                    class="finger-line"
+                    d="
+                    M510 94
+                    C495 100, 482 107, 470 115
+                " />
+
+            </svg>
+
+        </div>
+
+
+        <!-- FECHA -->
+
+        <div class="bottom-note">
+            01 · 01 · 2026
+        </div>
+
+    </section>
+
+
+
+    <!-- ========================================
+         CARTA
+    ======================================== -->
+
+    <section id="carta">
+
+        <div class="letter-container">
+
+
+            <h1 class="letter-title">
+                Para ti
+            </h1>
+
+            <p class="letter-subtitle">
+                ALGO QUE QUERÍA DECIRTE
+            </p>
+
+
+            <!-- PARTE 1 -->
+
+            <div class="letter-section active">
+
+                <h2>
+                    Lo que siento por ti
+                </h2>
+
+                <p>
+Mi amor mi niño hermoso sabes cuanto te amo y todo lo q haría x ti ? Daría lo q fuera por tenerte a mi lado x probar tus labios y perdernos juntos te amo y amo tu compañía amo cuando ríes amo tu humor amo tus ojos amo tus labios amo cada parte de ti no dejo de ver los videos en los q aparecemos juntos y veo lo feliz q soy a tu lado lo feliz q me hace tenerte en mi vida lo mucho q adoro reír contigo , cada día haces especial mi vida y es muy lindo saber q tengo a alguien q me comprende .
+                </p>
+
+            </div>
+
+
+            <!-- PARTE 2 -->
+
+            <div class="letter-section">
+
+                <h2>
+                    Lo que quizá no sabías de mí
+                </h2>
+
+                <p>
+Es algo fuerte pero agradezco q hagas q la vida se vea linda cuando siento q ya nd tiene solucion , pase por muchas cosas d niña cosas q no te imaginas y q te contaré poco a poco sabes no es fácil aún despierto en la madrugada llorando .
+
+Leer el chat y ver q contigo estoy segura y q d vrd me amas y me lo demuestras con cada palabra q me dices me calma .
+                </p>
+
+            </div>
+
+
+            <!-- PARTE 3 -->
+
+            <div class="letter-section">
+
+                <h2>
+                    Contigo puedo ser yo
+                </h2>
+
+                <p>
+Siempre senti q solo me querían x mi cuerpo o x como me veía pero tu vez más alla de eso , me vez a mi vez q me gusta q no me gusta ,q siento ,como soy ,q quiero en la vida .
+
+Sabes me di cuenta d q contigo todo se ve mejor contigo siento q puedo ser yo y no nesecito ocultar todo lo q x mucho tiempo afronte sola y no conté lo q calle y x primera vez siento q tengo a alguien que me entiende q sabe quien soy q ve algo en mi q yo aveces no lo reconozco .
+                </p>
+
+            </div>
+
+
+            <!-- PARTE 4 -->
+
+            <div class="letter-section">
+
+                <h2>
+                    Así empezó todo
+                </h2>
+
+                <p>
+Me motivas a ser mejor cada día a sonreír , odiaba como sonreía hasta q llegaste tu con tus chistes sobre mi y tus stickers y me hacías reír en cada clase aún sabiendo q no me gustaba jsjsjs te burlabas de mi Nono dislike 👎 pero dentro q todo cada vez te fuiste apoderando de mi corazón poco a poco conectaba mas contigo y aunq no lo veíamos cada vez éramos más unidos , cada vez q te veía en cámara y veía como jugabas y te matabas de risa cuando los profes estaban hablando serio .
+
+Me moría de risa y me dabas ternura .
+                </p>
+
+            </div>
+
+
+            <!-- PARTE 5 -->
+
+            <div class="letter-section">
+
+                <h2>
+                    Sí, me puse celosa
+                </h2>
+
+                <p>
+Recuerdo q m puse celosa de chumpitaz xq publico una llmd y tbm xq sabia q era tu amiga y encima dijiste q era una buena amiga ps Nono malcriado (al final yo soy tu novia 🥰) pero pues no podía reclamar xq era tu vida (decía cuando se moría xq fueras solo d ella Nono esa Zunrey mas sarcástica) .
+                </p>
+
+            </div>
+
+
+            <!-- PARTE 6 -->
+
+            <div class="letter-section">
+
+                <h2>
+                    Por qué me enamoré de ti
+                </h2>
+
+                <p>
+Mas alla de enamorarme x lo q senti me enamore de quien eres d como eres atento , cariñoso (ahora xq hace tiempo uy Ño poco más me mandabas a infratierra ) , gracioso , lindo , carismático , disciplinado , estudioso ( cuando quieres ) pero sobre todo el hecho d q fueras empatico y solidario me encanto d ti .
+
+Ni durante clase te puedo dejar de pensar y es raro xq no Crei q algun dia fuera a encontrar a alguien tan Perfecto como tu q me entiende y me calma logras hacer q cada vez te ame más .
+                </p>
+
+            </div>
+
+
+            <!-- PARTE 7 -->
+
+            <div class="letter-section">
+
+                <h2>
+                    Lo que has cambiado en mí
+                </h2>
+
+                <p>
+Sabes siento q curas partes q no rompiste y me encanta me siento en calma estar yo en calma es un milagro no sé cómo no vez errores en mi cuando siento q soy d todo menos perfecta aveces me da miedo ser demasiado intensa y agobiarte x eso trato d darte tbm tu espacio .
+
+Te convertiste en una persona muy importante para ti y quiero cuidarte abrazarte estar a tu lado y jamás dejarte darte todo el cariño q te mereces porque eres una persona que se merece lo mejor de este mundo y del siguiente .
+                </p>
+
+            </div>
+
+
+            <!-- PARTE 8 -->
+
+            <div class="letter-section">
+
+                <h2>
+                    Lo que imagino contigo
+                </h2>
+
+                <p>
+Cada dia haces mi vida más interesante adoro verte y escuchar tu voz q me calma y me da ternura dios no se q me hiciste cada día te amo mas y mas , gracias por hacerme tan feliz .
+
+Sabes cuando solo éramos amigos eras una de las personas con las q mas disfrutaba hablar en llmada y sentía q podía pasar horas hablando contigo o haciendo hora y eso se me ah quedado no hay q no quiera escuchar tu voz diciéndome lo mucho q me amas .
+
+Se que nos espera toda una vida juntos imagina contarle a nuestros hijos q nos conocimos en el colegio y q nos odiábamos a muerte pero poco a poco nos fuimos enamorando y logramos todas nuestras metas juntos , recuerdo cuando veíamos pelis de terror y en vez de asustarme nos matábamos de risa cada 5 segundos JAJSJAJ te adoro mi amor .
+                </p>
+
+            </div>
+
+
+            <!-- PARTE FINAL -->
+
+            <div class="letter-section">
+
+                <div class="final-message">
+
+                    <div class="big-heart">
+                        ♡
+                    </div>
+
+                    <h3>
+                        Te amo mi niño.
+                    </h3>
+
+                    <p>
+                        Gracias por ser parte de mi primer mes contigo.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- NAVEGACIÓN -->
+
+            <div class="letter-navigation">
+
+                <button onclick="anterior()">
+                    ← ANTERIOR
+                </button>
+
+                <span id="pageNumber">
+                    1 / 9
+                </span>
+
+                <button onclick="siguiente()">
+                    SIGUIENTE →
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ========================================
          PLAYLIST
-    ================================================= -->
+    ======================================== -->
 
-    <div class="playlist-section">
+    <section id="playlist">
 
-        <div class="section-number">
-            Un pequeño regalo
+        <div class="playlist-container">
+
+            <h2>
+                Nuestra playlist
+            </h2>
+
+            <p>
+                CANCIONES QUE ME HACEN PENSAR EN TI
+            </p>
+
+
+            <div class="spotify-player">
+
+                <iframe
+                    src="https://open.spotify.com/embed/playlist/4uq0c1P4S9yixsXV64wKFX?utm_source=generator"
+                    height="352"
+                    frameborder="0"
+                    allowfullscreen=""
+                    allow="
+                        autoplay;
+                        clipboard-write;
+                        encrypted-media;
+                        fullscreen;
+                        picture-in-picture
+                    "
+                    loading="lazy">
+                </iframe>
+
+            </div>
+
         </div>
 
-        <h3 class="section-title">
-            Una playlist para nosotros ♫
-        </h3>
-
-        <p class="playlist-text">
-            Porque hay canciones que ahora suenan diferente
-            simplemente porque me recuerdan a ti.
-        </p>
-
-        <div class="spotify-player">
-
-            <iframe
-                src="https://open.spotify.com/embed/playlist/4uq0c1P4S9yixsXV64wKFX?utm_source=generator"
-                height="352"
-                frameborder="0"
-                allowfullscreen=""
-                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                loading="lazy">
-            </iframe>
-
-        </div>
-
-    </div>
+    </section>
 
 
-</div>
 
-</section>
+    <!-- ========================================
+         JAVASCRIPT
+    ======================================== -->
 
+    <script>
 
-<script>
+        /* COMENZAR */
 
-/* =====================================================
-   NAVEGACIÓN
-===================================================== */
+        function comenzar() {
 
-let seccionActual = 0;
+            document.getElementById("carta")
+                .scrollIntoView({
+                    behavior: "smooth"
+                });
 
-const secciones =
-    document.querySelectorAll(".letter-section");
-
-const portada =
-    document.getElementById("portada");
-
-const carta =
-    document.getElementById("carta");
-
-const progress =
-    document.getElementById("progress");
-
-const nextButton =
-    document.getElementById("nextButton");
-
-const backButton =
-    document.getElementById("backButton");
-
-
-function comenzar() {
-
-    portada.style.opacity = "0";
-    portada.style.transform = "translateY(-35px)";
-
-    setTimeout(() => {
-
-        portada.style.display = "none";
-
-        carta.style.display = "block";
-
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
-
-    }, 900);
-
-}
-
-
-function mostrarSeccion(numero) {
-
-    secciones.forEach((seccion, index) => {
-
-        seccion.classList.remove("active");
-
-        if (index === numero) {
-            seccion.classList.add("active");
         }
 
-    });
+
+        /* CARTA */
+
+        let seccionActual = 0;
+
+        const secciones =
+            document.querySelectorAll(".letter-section");
+
+        const numeroPagina =
+            document.getElementById("pageNumber");
 
 
-    progress.textContent =
-        (numero + 1) +
-        " / " +
-        secciones.length;
+        function mostrarSeccion(numero) {
+
+            secciones.forEach(
+                (seccion, index) => {
+
+                    seccion.classList.toggle(
+                        "active",
+                        index === numero
+                    );
+
+                }
+            );
+
+            numeroPagina.textContent =
+                (numero + 1) +
+                " / " +
+                secciones.length;
+
+        }
 
 
-    if (numero === 0) {
+        function siguiente() {
 
-        backButton.style.display = "none";
+            if (seccionActual < secciones.length - 1) {
 
-    } else {
+                seccionActual++;
 
-        backButton.style.display = "inline-block";
+                mostrarSeccion(seccionActual);
 
-    }
+                document.getElementById("carta")
+                    .scrollIntoView({
+                        behavior: "smooth"
+                    });
+            }
 
-
-    if (numero === secciones.length - 1) {
-
-        nextButton.style.display = "none";
-
-    } else {
-
-        nextButton.style.display = "inline-block";
-
-    }
+        }
 
 
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
+        function anterior() {
 
-}
+            if (seccionActual > 0) {
 
+                seccionActual--;
 
-function siguiente() {
+                mostrarSeccion(seccionActual);
 
-    if (seccionActual < secciones.length - 1) {
+                document.getElementById("carta")
+                    .scrollIntoView({
+                        behavior: "smooth"
+                    });
+            }
 
-        seccionActual++;
-
-        mostrarSeccion(seccionActual);
-
-    }
-
-}
+        }
 
 
-function anterior() {
+        mostrarSeccion(0);
 
-    if (seccionActual > 0) {
-
-        seccionActual--;
-
-        mostrarSeccion(seccionActual);
-
-    }
-
-}
-
-
-mostrarSeccion(0);
-
-</script>
+    </script>
 
 </body>
+
 </html>
