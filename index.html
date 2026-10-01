@@ -3,191 +3,672 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nuestro Primer Mes</title>
-    <!-- Fuente elegante de Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+
+    <title>Nuestro primer mes</title>
+
     <style>
+
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
-            background-color: #0b0714; /* Fondo morado súper oscuro y elegante */
-            color: #f3e8ff;
-            font-family: 'Montserrat', sans-serif;
+            min-height: 100vh;
+            font-family: Georgia, 'Times New Roman', serif;
+            background:
+                radial-gradient(circle at 50% 40%, #24143d 0%, #100b19 45%, #050507 100%);
+            color: #f4f1f8;
+            overflow-x: hidden;
+        }
+
+        /* ESTRELLAS */
+
+        .stars {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: #d9d4e2;
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: twinkle 3s infinite ease-in-out;
+        }
+
+        /* PORTADA */
+
+        #portada {
             min-height: 100vh;
             display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: center;
-            overflow-x: hidden;
+            align-items: center;
+            text-align: center;
             position: relative;
-        }
-
-        /* Estrellitas decorativas sutiles en el fondo */
-        body::before {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                radial-gradient(white 1px, transparent 0),
-                radial-gradient(rgba(216, 180, 254, 0.4) 1px, transparent 0);
-            background-size: 50px 50px, 80px 80px;
-            background-position: 0 0, 25px 25px;
-            opacity: 0.2;
-            z-index: -1;
-        }
-
-        /* Sticker de Spider-Man asomándose arriba */
-        .sticker-spider {
-            position: absolute;
-            top: 0px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 90px;
-            height: auto;
-            z-index: 10;
-            filter: drop-shadow(0 5px 15px rgba(168, 85, 247, 0.3));
-        }
-
-        /* Sticker de flores abajo a la derecha */
-        .sticker-flores {
-            position: absolute;
-            bottom: 10px;
-            right: 15px;
-            width: 110px;
-            height: auto;
-            z-index: 10;
-            filter: drop-shadow(0 5px 15px rgba(168, 85, 247, 0.3));
+            z-index: 2;
+            transition: opacity 1s ease, transform 1s ease;
         }
 
         .container {
-            text-align: center;
-            padding: 20px;
-            max-width: 650px;
-            z-index: 2;
+            padding: 30px;
+            animation: appear 1.8s ease forwards;
         }
 
-        .subtitle-top {
-            font-size: 0.85rem;
+        .small-text {
+            font-family: Arial, sans-serif;
             text-transform: uppercase;
-            letter-spacing: 4px;
-            color: #d8b4fe;
-            margin-bottom: 15px;
-            font-weight: 400;
+            letter-spacing: 5px;
+            font-size: 11px;
+            color: #aaa1b8;
+            margin-bottom: 22px;
         }
 
         h1 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 3.8rem;
-            font-weight: 600;
-            line-height: 1.1;
-            margin-bottom: 25px;
-            color: #ffffff;
-            text-shadow: 0 0 25px rgba(216, 180, 254, 0.4);
+            font-size: clamp(45px, 8vw, 90px);
+            font-weight: normal;
+            letter-spacing: -2px;
+            margin-bottom: 12px;
         }
 
-        /* Contenedor de las manos con brillo romántico */
-        .imagen-manos-container {
-            margin: 20px auto;
-            display: inline-block;
-            position: relative;
-        }
-
-        .imagen-manos-container::after {
-            content: '';
-            position: absolute;
-            inset: -10px;
-            background: radial-gradient(circle, rgba(192, 132, 252, 0.35) 0%, transparent 70%);
-            border-radius: 50%;
-            z-index: -1;
-            filter: blur(8px);
-        }
-
-        .imagen-manos {
-            width: 130px;
-            height: auto;
-            border-radius: 50%;
-            display: block;
-            margin: 0 auto;
-            border: 2px solid rgba(216, 180, 254, 0.3);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        }
-
-        .message {
-            font-family: 'Cormorant Garamond', serif;
+        .subtitle {
+            color: #c8bfd3;
+            font-size: 17px;
             font-style: italic;
-            font-size: 1.25rem;
-            color: #e9d5ff;
-            margin-bottom: 35px;
-            letter-spacing: 0.5px;
+            margin-bottom: 45px;
         }
 
-        .btn-comenzar {
-            display: inline-block;
-            padding: 12px 35px;
-            font-size: 0.9rem;
+        .heart {
+            color: #9c7bc5;
+            font-size: 22px;
+            margin-bottom: 28px;
+            animation: pulse 2s infinite ease-in-out;
+        }
+
+        .start-button,
+        .next-button,
+        .back-button {
+            border: 1px solid #81758f;
+            background: rgba(255, 255, 255, 0.03);
+            color: #f4f1f8;
+            padding: 15px 38px;
+            border-radius: 50px;
+            font-size: 13px;
+            letter-spacing: 3px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+        }
+
+        .start-button:hover,
+        .next-button:hover,
+        .back-button:hover {
+            background: #7c5aa2;
+            border-color: #bca7d4;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(124, 90, 162, 0.35);
+        }
+
+        /* CARTA */
+
+        #carta {
+            display: none;
+            min-height: 100vh;
+            padding: 80px 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .letter-container {
+            width: min(850px, 94%);
+            margin: auto;
+        }
+
+        .letter-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .letter-header .mini-heart {
+            font-size: 25px;
+            color: #9c7bc5;
+            animation: pulse 2s infinite;
+            margin-bottom: 20px;
+        }
+
+        .letter-header h2 {
+            font-size: clamp(35px, 6vw, 60px);
+            font-weight: normal;
+            margin-bottom: 15px;
+        }
+
+        .letter-header p {
+            color: #aaa1b8;
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            letter-spacing: 3px;
             text-transform: uppercase;
+        }
+
+        /* SECCIONES */
+
+        .letter-section {
+            display: none;
+            animation: sectionAppear 0.8s ease forwards;
+        }
+
+        .letter-section.active {
+            display: block;
+        }
+
+        .section-number {
+            font-family: Arial, sans-serif;
+            color: #9c7bc5;
+            font-size: 11px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        .section-title {
+            font-size: clamp(27px, 5vw, 42px);
+            font-weight: normal;
+            margin-bottom: 30px;
+        }
+
+        .letter-text {
+            color: #ddd8e3;
+            font-size: 18px;
+            line-height: 2;
+            white-space: pre-line;
+        }
+
+        /* CONTROLES */
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-top: 55px;
+            flex-wrap: wrap;
+        }
+
+        .progress {
+            color: #91869f;
+            font-family: Arial, sans-serif;
+            font-size: 12px;
             letter-spacing: 2px;
-            color: #f3e8ff;
-            background: transparent;
-            border: 1px solid rgba(216, 180, 254, 0.5);
-            border-radius: 30px;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 15px rgba(168, 85, 247, 0.15);
+            margin: 0 10px;
         }
 
-        .btn-comenzar:hover {
-            background: #d8b4fe;
-            color: #0b0714;
-            border-color: #d8b4fe;
-            box-shadow: 0 0 25px rgba(216, 180, 254, 0.6);
-            transform: translateY(-2px);
+        .back-button {
+            padding: 12px 25px;
+            font-size: 11px;
         }
 
-        /* Adaptabilidad para celulares */
+        .next-button {
+            padding: 12px 30px;
+            font-size: 11px;
+        }
+
+        /* FINAL */
+
+        .final-message {
+            text-align: center;
+            padding: 30px 0 80px;
+        }
+
+        .final-message .big-heart {
+            font-size: 45px;
+            color: #9c7bc5;
+            animation: pulse 2s infinite;
+            margin-bottom: 30px;
+        }
+
+        .final-message h3 {
+            font-size: clamp(30px, 6vw, 50px);
+            font-weight: normal;
+            margin-bottom: 25px;
+        }
+
+        .final-message p {
+            color: #c8bfd3;
+            font-size: 18px;
+            line-height: 1.9;
+            font-style: italic;
+        }
+
+        /* ANIMACIONES */
+
+        @keyframes appear {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes sectionAppear {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.7;
+            }
+
+            50% {
+                transform: scale(1.15);
+                opacity: 1;
+            }
+        }
+
+        @keyframes twinkle {
+            0%, 100% {
+                opacity: 0.2;
+            }
+
+            50% {
+                opacity: 0.9;
+            }
+        }
+
+        /* MÓVIL */
+
         @media (max-width: 600px) {
-            h1 {
-                font-size: 2.8rem;
+
+            .letter-text {
+                font-size: 16px;
+                line-height: 1.85;
             }
-            .container {
-                padding: 15px;
+
+            #carta {
+                padding-top: 50px;
             }
-            .sticker-spider {
-                width: 70px;
+
+            .letter-header {
+                margin-bottom: 45px;
             }
-            .sticker-flores {
-                width: 90px;
+
+            .controls {
+                margin-top: 40px;
             }
+
         }
+
     </style>
 </head>
+
 <body>
 
-    <!-- Spider-Man asomándose arriba -->
-    <img src="spiderman. png.png" class="sticker-spider" alt="Spider-Man asomándose">[cite: 6]
+    <!-- ESTRELLAS -->
 
-    <div class="container">
-        <div class="subtitle-top">Para mi niño precioso</div>
-        
-        <h1>Nuestro primer<br>mes</h1>
+    <div class="stars">
 
-        <div class="imagen-manos-container">
-            <!-- Manos al centro con brillo -->
-            <img src="1111.png.jpg" class="imagen-manos" alt="Manos a punto de tocarse">[cite: 6]
-        </div>
+        <span class="star" style="top: 15%; left: 12%; animation-delay: 0s;"></span>
+        <span class="star" style="top: 25%; left: 82%; animation-delay: 1s;"></span>
+        <span class="star" style="top: 70%; left: 20%; animation-delay: 2s;"></span>
+        <span class="star" style="top: 78%; left: 76%; animation-delay: 0.5s;"></span>
+        <span class="star" style="top: 40%; left: 90%; animation-delay: 1.5s;"></span>
+        <span class="star" style="top: 60%; left: 8%; animation-delay: 2.5s;"></span>
 
-        <p class="message">Una pequeña sorpresa hecha especialmente para ti.</p>
+        <span class="star" style="top: 10%; left: 55%; animation-delay: 1.2s;"></span>
+        <span class="star" style="top: 85%; left: 45%; animation-delay: 2.2s;"></span>
+        <span class="star" style="top: 33%; left: 5%; animation-delay: 0.7s;"></span>
+        <span class="star" style="top: 50%; left: 70%; animation-delay: 1.8s;"></span>
 
-        <a href="#" class="btn-comenzar">Comenzar</a>
     </div>
 
-    <!-- Flores abajo a la derecha -->
-    <img src="flower.png.png" class="sticker-flores" alt="Flores decorativas">[cite: 6]
+
+    <!-- PORTADA -->
+
+    <section id="portada">
+
+        <main class="container">
+
+            <div class="small-text">
+                para mi persona favorita
+            </div>
+
+            <div class="heart">
+                ♡
+            </div>
+
+            <h1>
+                Nuestro primer mes
+            </h1>
+
+            <p class="subtitle">
+                Una pequeña sorpresa hecha especialmente para ti.
+            </p>
+
+            <button class="start-button" onclick="comenzar()">
+                COMENZAR
+            </button>
+
+        </main>
+
+    </section>
+
+
+    <!-- CARTA -->
+
+    <section id="carta">
+
+        <div class="letter-container">
+
+            <div class="letter-header">
+
+                <div class="mini-heart">
+                    ♡
+                </div>
+
+                <h2>
+                    Para ti, Mario
+                </h2>
+
+                <p>
+                    algo que quería decirte hace mucho
+                </p>
+
+            </div>
+
+
+            <!-- PARTE 1 -->
+
+            <div class="letter-section active">
+
+                <div class="section-number">
+                    Parte I
+                </div>
+
+                <h3 class="section-title">
+                    Mi amor, mi niño hermoso...
+                </h3>
+
+                <p class="letter-text">Mi amor mi niño hermoso sabes cuanto te amo y todo lo q haría x ti ? Daría lo q fuera por tenerte a mi lado x probar tus labios y perdernos juntos te amo y amo tu compañía amo cuando ríes amo tu humor amo tus ojos amo tus labios amo cada parte de ti no dejo de ver los videos en los q aparecemos juntos y veo lo feliz q soy a tu lado lo feliz q me hace tenerte en mi vida lo mucho q adoro reír contigo , cada día haces especial mi vida y es muy lindo saber q tengo a alguien q me comprende , es algo fuerte pero agradezco q hagas q la vida se vea linda cuando siento q ya nd tiene solucion , pase por muchas cosas d niña cosas q no te imaginas y q te contaré poco a poco sabes no es fácil aún despierto en la madrugada llorando.</p>
+
+            </div>
+
+
+            <!-- PARTE 2 -->
+
+            <div class="letter-section">
+
+                <div class="section-number">
+                    Parte II
+                </div>
+
+                <h3 class="section-title">
+                    Contigo me siento segura
+                </h3>
+
+                <p class="letter-text">Leer el chat y ver q contigo estoy segura y q d vrd me amas y me lo demuestras con cada palabra q me dices me calma , siempre senti q solo me querían x mi cuerpo o x como me veía pero tu vez más alla de eso , me vez a mi vez q me gusta q no me gusta ,q siento ,como soy ,q quiero en la vida.</p>
+
+            </div>
+
+
+            <!-- PARTE 3 -->
+
+            <div class="letter-section">
+
+                <div class="section-number">
+                    Parte III
+                </div>
+
+                <h3 class="section-title">
+                    Contigo puedo ser yo
+                </h3>
+
+                <p class="letter-text">Sabes me di cuenta d q contigo todo se ve mejor contigo siento q puedo ser yo y no nesecito ocultar todo lo q x mucho tiempo afronte sola y no conté lo q calle y x primera vez siento q tengo a alguien que me entiende q sabe quien soy q ve algo en mi q yo aveces no lo reconozco me motivas a ser mejor cada día a sonreír , odiaba como sonreía hasta q llegaste tu con tus chistes sobre mi y tus stickers y me hacías reír en cada clase aún sabiendo q no me gustaba jsjsjs te burlabas de mi Nono dislike 👎 pero dentro q todo cada vez te fuiste apoderando de mi corazón poco a poco conectaba mas contigo y aunq no lo veíamos cada vez éramos más unidos , cada vez q te veía en cámara y veía como jugabas y te matabas de risa cuando los profes estaban hablando serio.</p>
+
+            </div>
+
+
+            <!-- PARTE 4 -->
+
+            <div class="letter-section">
+
+                <div class="section-number">
+                    Parte IV
+                </div>
+
+                <h3 class="section-title">
+                    Sí, me puse celosa
+                </h3>
+
+                <p class="letter-text">Me moría de risa y me dabas ternura , recuerdo q m puse celosa de chumpitaz xq publico una llmd y tbm xq sabia q era tu amiga y encima dijiste q era una buena amiga ps Nono malcriado (al final yo soy tu novia 🥰) pero pues no podía reclamar xq era tu vida (decía cuando se moría xq fueras solo d ella Nono esa Zunrey mas sarcástica) mas alla de enamorarme xq lo q senti me enamore de quien eres d como eres atento , cariñoso (ahora xq hace tiempo uy Ño poco más me mandabas a infratierra ) , gracioso , lindo , carismático , disciplinado , estudioso ( cuando quieres ) pero sobre todo el hecho d q fueras empatico y solidario me encanto d ti.</p>
+
+            </div>
+
+
+            <!-- PARTE 5 -->
+
+            <div class="letter-section">
+
+                <div class="section-number">
+                    Parte V
+                </div>
+
+                <h3 class="section-title">
+                    Lo que haces en mí
+                </h3>
+
+                <p class="letter-text">Ni durante clase te puedo dejar de pensar y es raro xq no Crei q algun dia fuera a encontrar a alguien tan Perfecto como tu q me entiende y me calma logras hacer q cada vez te ame más sabes siento q curas partes q no rompiste y me encanta me siento en calma estar yo en calma es un milagro no sé cómo no vez errores en mi cuando siento q soy d todo menos perfecta aveces me da miedo ser demasiado intensa y agobiarte x eso trato d darte tbm tu espacio te convertiste en una persona muy importante para ti y quiero cuidarte abrazarte estar a tu lado y jamás dejarte darte todo el cariño q te mereces porque eres una persona que se merece lo mejor de este mundo y del siguiente.</p>
+
+            </div>
+
+
+            <!-- PARTE 6 -->
+
+            <div class="letter-section">
+
+                <div class="section-number">
+                    Parte VI
+                </div>
+
+                <h3 class="section-title">
+                    Lo que todavía estoy aprendiendo
+                </h3>
+
+                <p class="letter-text">Y digo trato xq enserio q hay veces en las q ni yo me entiendo incluso cuando me fue bien en el dia tiendo a ver mis errores antes q mis logros y se lo q eh logrado pero tbm se q tengo defectos q voy a cambiar x nosotros , xq ya me imaginé una vida entera juntos xq ya no puedo imaginar a otra persona en mi vida q no seas tu , porque muero x formar una familia y hacerlos felices y llenarlos d amor xq te amo Mario te adoro con toda el alma.</p>
+
+            </div>
+
+
+            <!-- PARTE 7 -->
+
+            <div class="letter-section">
+
+                <div class="section-number">
+                    Parte VII
+                </div>
+
+                <h3 class="section-title">
+                    Y todavía hay tanto por vivir
+                </h3>
+
+                <p class="letter-text">Cada dia haces mi vida más interesante adoro verte y escuchar tu voz q me calma y me da ternura dios no se q me hiciste cada día te amo mas y mas , gracias por hacerme tan feliz , sabes cuando solo éramos amigos eras una de las personas con las q mas disfrutaba hablar en llmada y sentía q podía pasar horas hablando contigo o haciendo hora y eso se me ah quedado no hay q no quiera escuchar tu voz diciéndome lo mucho q me amas , se que nos espera toda una vida juntos imagina contarle a nuestros hijos q nos conocimos en el colegio y q nos odiábamos a muerte pero poco a poco nos fuimos enamorando y logramos todas nuestras metas juntos , recuerdo cuando veíamos pelis de terror y en vez de asustarme nos matábamos de risa cada 5 segundos JAJSJAJ te adoro mi amor.</p>
+
+            </div>
+
+
+            <!-- FINAL -->
+
+            <div class="letter-section">
+
+                <div class="final-message">
+
+                    <div class="big-heart">
+                        ♡
+                    </div>
+
+                    <h3>
+                        Te adoro con toda el alma.
+                    </h3>
+
+                    <p>
+                        Gracias por ser parte de mi primer mes contigo.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- BOTONES -->
+
+            <div class="controls">
+
+                <button
+                    class="back-button"
+                    id="backButton"
+                    onclick="anterior()">
+                    ← ANTERIOR
+                </button>
+
+                <span class="progress" id="progress">
+                    1 / 8
+                </span>
+
+                <button
+                    class="next-button"
+                    id="nextButton"
+                    onclick="siguiente()">
+                    SIGUIENTE →
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <script>
+
+        let seccionActual = 0;
+
+        const secciones = document.querySelectorAll(".letter-section");
+
+        const portada = document.getElementById("portada");
+        const carta = document.getElementById("carta");
+
+        const progress = document.getElementById("progress");
+        const nextButton = document.getElementById("nextButton");
+        const backButton = document.getElementById("backButton");
+
+
+        function comenzar() {
+
+            portada.style.opacity = "0";
+            portada.style.transform = "translateY(-30px)";
+
+            setTimeout(() => {
+
+                portada.style.display = "none";
+                carta.style.display = "block";
+
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
+                });
+
+            }, 900);
+
+        }
+
+
+        function mostrarSeccion(numero) {
+
+            secciones.forEach((seccion, index) => {
+
+                seccion.classList.remove("active");
+
+                if (index === numero) {
+                    seccion.classList.add("active");
+                }
+
+            });
+
+            progress.textContent =
+                (numero + 1) + " / " + secciones.length;
+
+
+            if (numero === 0) {
+                backButton.style.display = "none";
+            } else {
+                backButton.style.display = "inline-block";
+            }
+
+
+            if (numero === secciones.length - 1) {
+                nextButton.style.display = "none";
+            } else {
+                nextButton.style.display = "inline-block";
+            }
+
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+
+        }
+
+
+        function siguiente() {
+
+            if (seccionActual < secciones.length - 1) {
+
+                seccionActual++;
+
+                mostrarSeccion(seccionActual);
+
+            }
+
+        }
+
+
+        function anterior() {
+
+            if (seccionActual > 0) {
+
+                seccionActual--;
+
+                mostrarSeccion(seccionActual);
+
+            }
+
+        }
+
+
+        mostrarSeccion(0);
+
+    </script>
 
 </body>
 </html>
