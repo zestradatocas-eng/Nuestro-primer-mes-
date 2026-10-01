@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Nuestro primer mes</title>
-
+    <title>Para ti, Mario ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -13,16 +12,16 @@
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             min-height: 100vh;
             font-family: Georgia, 'Times New Roman', serif;
-            background:
-                radial-gradient(circle at 50% 40%, #24143d 0%, #100b19 45%, #050507 100%);
+            background: radial-gradient(circle at 50% 40%, #24143d 0%, #100b19 45%, #050507 100%);
             color: #f4f1f8;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
+            overflow-x: hidden;
         }
 
         .stars {
@@ -30,6 +29,7 @@
             inset: 0;
             pointer-events: none;
             overflow: hidden;
+            z-index: 1;
         }
 
         .star {
@@ -42,11 +42,21 @@
             animation: twinkle 3s infinite ease-in-out;
         }
 
-        .container {
-            text-align: center;
+        /* SECCIONES */
+        section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 4rem 1.5rem;
             position: relative;
             z-index: 2;
-            padding: 30px;
+        }
+
+        .container {
+            text-align: center;
+            max-width: 600px;
             animation: appear 1.8s ease forwards;
         }
 
@@ -60,10 +70,11 @@
         }
 
         h1 {
-            font-size: clamp(45px, 8vw, 90px);
+            font-size: clamp(35px, 6vw, 75px);
             font-weight: normal;
-            letter-spacing: -2px;
+            letter-spacing: -1px;
             margin-bottom: 12px;
+            line-height: 1.2;
         }
 
         .subtitle {
@@ -90,6 +101,8 @@
             letter-spacing: 3px;
             cursor: pointer;
             transition: all 0.4s ease;
+            text-decoration: none;
+            display: inline-block;
         }
 
         .start-button:hover {
@@ -99,42 +112,97 @@
             box-shadow: 0 10px 30px rgba(124, 90, 162, 0.35);
         }
 
-        @keyframes appear {
-            from {
-                opacity: 0;
-                transform: translateY(25px);
-            }
+        /* SECCIÓN DE LA CARTA */
+        #carta-section {
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 5rem 1.5rem;
+        }
 
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .parrafo-carta {
+            background: rgba(20, 12, 30, 0.7);
+            border: 1px solid rgba(156, 123, 197, 0.2);
+            padding: 2rem;
+            border-radius: 16px;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: #f4f1f8;
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .parrafo-carta.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* SECCIÓN DE CIERRE */
+        #cierre-section {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+            gap: 1.5rem;
+        }
+
+        .cierre-texto {
+            font-size: 1.3rem;
+            color: #c8bfd3;
+            font-style: italic;
+            line-height: 1.6;
+            margin-bottom: 1.2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .cierre-texto.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .firma-final {
+            font-size: 2rem;
+            color: #e2d1f9;
+            margin: 1.5rem 0;
+        }
+
+        #sorpresa-box {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background: rgba(124, 90, 162, 0.15);
+            border: 1px dashed #bca7d4;
+            border-radius: 12px;
+            display: none;
+            animation: fadeInSorpresa 0.8s ease forwards;
+        }
+
+        @keyframes fadeInSorpresa {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes appear {
+            from { opacity: 0; transform: translateY(25px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-                opacity: 0.7;
-            }
-
-            50% {
-                transform: scale(1.15);
-                opacity: 1;
-            }
+            0%, 100% { transform: scale(1); opacity: 0.7; }
+            50% { transform: scale(1.15); opacity: 1; }
         }
 
         @keyframes twinkle {
-            0%, 100% {
-                opacity: 0.2;
-            }
-
-            50% {
-                opacity: 0.9;
-            }
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 0.9; }
         }
     </style>
 </head>
-
 <body>
 
     <div class="stars">
@@ -146,31 +214,90 @@
         <span class="star" style="top: 60%; left: 8%; animation-delay: 2.5s;"></span>
     </div>
 
-    <main class="container">
+    <!-- SECCIÓN 1: PORTADA -->
+    <section>
+        <main class="container">
+            <div class="small-text">para mi persona favorita</div>
+            <div class="heart">♡</div>
+            <h1>Nuestro primer mes</h1>
+            <p class="subtitle">Una pequeña sorpresa hecha especialmente para ti.</p>
+            <a href="#carta-section" class="start-button">COMENZAR</a>
+        </main>
+    </section>
 
-        <div class="small-text">
-            para mi persona favorita
+    <!-- SECCIÓN 2: LA CARTA -->
+    <div id="carta-section">
+        <div class="parrafo-carta">
+            Mi amor mi niño hermoso sabes cuanto te amo y todo lo q haría x ti ? Daría lo q fuera por tenerte a mi lado x probar tus labios y perdernos juntos te amo y amo tu compañía amo cuando ríes amo tu humor amo tus ojos amo tus labios amo cada parte de ti no dejo de ver los videos en los q aparecemos juntos y veo lo feliz q soy a tu lado lo feliz q me hace tenerte en vida lo mucho q adoro reír contigo , cada día haces especial mi vida y es muy lindo saber q tengo a alguien q me comprende , es algo fuerte pero agradezco q hagas q la vida se vea linda cuando siento q ya nd tiene solucion , pase por muchas cosas d niña cosas q no te imaginas y q te contaré poco a poco sabes no es fácil aún despierto en la madrugada llorando .
         </div>
 
-        <div class="heart">♡</div>
+        <div class="parrafo-carta">
+            Leer el chat y ver q contigo estoy segura y q d vrd me amas y me lo demuestras con cada palabra q me dices me calma , siempre senti q solo me querían x mi cuerpo o x como me veía pero tu vez más alla de eso , me vez a mi vez q me gusta q no me gusta ,q siento ,como soy ,q quiero en la vida .
+        </div>
 
-        <h1>Nuestro primer mes</h1>
+        <div class="parrafo-carta">
+            Sabes me di cuenta d q contigo todo se ve mejor contigo siento q puedo ser yo y no nesecito ocultar todo lo q x mucho tiempo afronte sola y no conté lo q calle y x primera vez siento q tengo a alguien que me entiende q sabe quien soy q ve algo en mi q yo aveces no lo reconozco me motivas a ser mejor cada día a sonreír , odiaba como sonreía hasta q llegaste tu con tus chistes sobre mi y tus stickers y me hacías reír en clase aún sabiendo q no me gustaba jsjsjs te burlabas de mi Nono dislike 👎 pero dentro q todo cada vez te fuiste apoderando de mi corazón poco a poco conectaba mas contigo y aunq no lo veíamos cada vez éramos más unidos , cada vez q te veía en cámara y veía como jugabas y te matabas de risa cuando los profes estaban hablando serio .
+        </div>
 
-        <p class="subtitle">
-            Una pequeña sorpresa hecha especialmente para ti.
-        </p>
+        <div class="parrafo-carta">
+            Me moría de risa y me dabas ternura , recuerdo q m puse celosa de chumpitaz xq publico una llmd y tbm xq sabia q era tu amiga y encima dijiste q era una buena amiga ps Nono malcriado (al final yo soy tu novia 🥰) pero pues no podía reclamar xq era tu vida (decía cuando se moría xq fueras solo d ella Nono esa Zunrey mas sarcástica) mas alla de enamorarme xq lo q senti me enamore de quien eres d como eres atento , cariñoso (ahora xq hace tiempo uy Ño poco más me mandabas a infratierra ) , gracioso , lindo , carismático , disciplinado , estudioso ( cuando quieres ) pero sobre todo el hecho d q fueras empatico y solidario me encanto d ti .
+        </div>
 
-        <button class="start-button" onclick="comenzar()">
-            COMENZAR
-        </button>
+        <div class="parrafo-carta">
+            Ni durante clase te puedo dejar de pensar y es raro xq no Crei q algun dia fuera a encontrar a alguien tan Perfecto como tu q me entiende y me calma logras hacer q cada vez te ame más sabes siento q curas partes q no rompiste y me encanta me siento en calma estar yo en calma es un milagro no sé cómo no vez errores en mi cuando siento q soy d todo menos perfecta aveces me da miedo ser demasiado intensa y agobiarte x eso trato d darte tbm tu espacio te convertiste en una persona muy importante para ti y quiero cuidarte abrazarte estar a tu lado y jamás dejarte darte todo el cariño q te mereces porque eres una persona que se merece lo mejor de este mundo y del siguiente .
+        </div>
 
-    </main>
+        <div class="parrafo-carta">
+            Y digo trato xq enserio q hay veces en las q ni yo me entiendo hay veces en las q no tengo ganas d respirar incluso cuando me fue bien en el dia tiendo a ver mis errores antes q mis logros y se lo q eh logrado pero tbm se q tengo defectos q voy a cambiar x nosotros , xq ya me imaginé una vida entera juntos xq ya no puedo imaginar a otra persona en mi vida q no seas tu , porque muero x formar una familia y hacerlos felices y llenarlos d amor xq te amo Mario te adoro con toda el alma .
+        </div>
+
+        <div class="parrafo-carta">
+            Cada dia haces mi vida más interesante adoro verte y escuchar tu voz q me calma y me da ternura dios no se q me hiciste cada día te amo mas y mas , gracias por hacerme tan feliz , sabes cuando solo éramos amigos eras una de las personas con las q mas disfrutaba hablar en llmada y sentía q podía pasar horas hablando contigo o haciendo hora y eso se me ah quedado no hay q no quiera escuchar tu voz diciéndome lo mucho q me amas , se que nos espera toda una vida juntos imagina contarle a nuestros hijos q nos conocimos en el colegio y q nos odiábamos a muerte pero poco a poco nos fuimos enamorando y logramos todas nuestras metas juntos , recuerdo cuando veíamos pelis de terror y en vez de asustarme nos matábamos de risa cada 5 segundos JAJSJAJ te adoro mi amor .
+        </div>
+    </div>
+
+    <!-- SECCIÓN 3: CIERRE -->
+    <section id="cierre-section">
+        <div class="container" style="max-width: 600px;">
+            <p class="cierre-texto">“Y si alguna vez dudas de cuánto te amo…”</p>
+            <p class="cierre-texto">“vuelve aquí y recuerda que alguien te eligió, te quiere y está muy feliz de tenerte en su vida.”</p>
+            <h2 class="firma-final">Te amo, Mario. ❤️</h2>
+            
+            <div style="margin-top: 1.5rem;">
+                <button class="start-button" onclick="mostrarSorpresa()">Una última cosita…</button>
+            </div>
+
+            <div id="sorpresa-box">
+                <p style="font-family: Georgia, serif; font-size: 1.1rem; color: #e2d1f9; line-height: 1.6;">
+                    “Gracias por existir y por formar parte de mi historia.” ✨
+                </p>
+            </div>
+        </div>
+    </section>
 
     <script>
-        function comenzar() {
-            alert("Aquí comenzará nuestra historia...");
+        // Animación suave al hacer scroll
+        const observerOptions = {
+            threshold: 0.15
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.parrafo-carta, .cierre-texto').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Botón sorpresa final
+        function mostrarSorpresa() {
+            const box = document.getElementById('sorpresa-box');
+            box.style.display = 'block';
         }
     </script>
-
 </body>
 </html>
