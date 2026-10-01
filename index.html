@@ -19,24 +19,13 @@
         body {
             min-height: 100vh;
             font-family: Georgia, 'Times New Roman', serif;
-            background: radial-gradient(circle at 50% 40%, #1a2e22 0%, #160d26 45%, #08030f 100%);
+            /* Fondo 100% morado elegante y profundo */
+            background: radial-gradient(circle at 50% 40%, #2e1a3b 0%, #180d21 45%, #0a040f 100%);
             color: #f4f1f8;
             overflow-x: hidden;
         }
 
-        body::before {
-            content: "";
-            position: fixed;
-            inset: 0;
-            background-image: 
-                radial-gradient(circle at 50% 30%, rgba(229, 9, 20, 0.05) 0%, transparent 60%),
-                linear-gradient(0deg, rgba(34, 197, 94, 0.02) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(34, 197, 94, 0.02) 1px, transparent 1px);
-            background-size: 100% 100%, 40px 40px, 40px 40px;
-            pointer-events: none;
-            z-index: 1;
-        }
-
+        /* Estrellas y destellos de fondo */
         .stars {
             position: fixed;
             inset: 0;
@@ -49,12 +38,13 @@
             position: absolute;
             width: 2px;
             height: 2px;
-            background: #d9d4e2;
+            background: #e2d1f9;
             border-radius: 50%;
             opacity: 0.6;
             animation: twinkle 3s infinite ease-in-out;
         }
 
+        /* STICKERS EN LOS BORDES */
         .sticker-spider {
             position: fixed;
             top: 0;
@@ -99,7 +89,7 @@
             text-transform: uppercase;
             letter-spacing: 5px;
             font-size: 11px;
-            color: #86efac;
+            color: #d8b4fe;
             margin-bottom: 22px;
         }
 
@@ -110,19 +100,31 @@
             margin-bottom: 12px;
             line-height: 1.2;
             color: #fff;
-            text-shadow: 0 0 20px rgba(229, 9, 20, 0.3);
+            text-shadow: 0 0 20px rgba(168, 85, 247, 0.4);
+        }
+
+        /* IMAGEN DE LAS MANOS EN EL CENTRO */
+        .imagen-manos {
+            width: 100%;
+            max-width: 480px; /* Tamaño ideal para que se vea imponente */
+            margin: 20px auto;
+            display: block;
+            mix-blend-mode: screen; /* Esto borra el fondo negro y deja las manos brillantes */
+            opacity: 0.9;
+            pointer-events: none;
+            filter: drop-shadow(0 0 15px rgba(168, 85, 247, 0.4));
         }
 
         .subtitle {
-            color: #d8b4fe;
+            color: #e9d5ff;
             font-size: 17px;
             font-style: italic;
             margin-bottom: 45px;
         }
 
         .start-button {
-            border: 1px solid #81758f;
-            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid #9333ea;
+            background: rgba(147, 51, 234, 0.1);
             color: #f4f1f8;
             padding: 15px 38px;
             border-radius: 50px;
@@ -135,10 +137,10 @@
         }
 
         .start-button:hover {
-            background: #7c5aa2;
-            border-color: #bca7d4;
+            background: #a855f7;
+            border-color: #c084fc;
             transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(124, 90, 162, 0.35);
+            box-shadow: 0 10px 30px rgba(168, 85, 247, 0.4);
         }
 
         #carta-section {
@@ -153,9 +155,9 @@
         }
 
         .parrafo-carta {
-            background: rgba(22, 13, 38, 0.9);
-            border: 1px solid rgba(156, 123, 197, 0.25);
-            border-left: 4px solid #ef4444; 
+            background: rgba(24, 13, 33, 0.9);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            border-left: 4px solid #a855f7; 
             padding: 2.2rem;
             border-radius: 12px;
             font-size: 1.05rem;
@@ -182,7 +184,7 @@
 
         .cierre-texto {
             font-size: 1.3rem;
-            color: #d8b4fe;
+            color: #e9d5ff;
             font-style: italic;
             line-height: 1.6;
             margin-bottom: 1.2rem;
@@ -198,7 +200,7 @@
 
         .firma-final {
             font-size: 2rem;
-            color: #e2d1f9;
+            color: #f3e8ff;
             margin: 1.5rem 0;
         }
 
@@ -242,8 +244,8 @@
         #sorpresa-box {
             margin-top: 1.5rem;
             padding: 1.5rem;
-            background: rgba(34, 197, 94, 0.1);
-            border: 1px dashed #22c55e;
+            background: rgba(168, 85, 247, 0.1);
+            border: 1px dashed #c084fc;
             border-radius: 12px;
             display: none;
             animation: fadeInSorpresa 0.8s ease forwards;
@@ -267,9 +269,9 @@
 </head>
 <body>
 
-    <!-- REEMPLAZA 'spider.png' y 'flores.png' con los nombres exactos de tus imágenes cuando las subas -->
-    <img src="spider.png" class="sticker-spider" alt="Spider-Man asomándose">
-    <img src="flores.png" class="sticker-flores" alt="Flores decorativas">
+    <!-- STICKERS: Asegúrate de que los nombres coincidan exactamente con GitHub -->
+    <img src="spiderman.png" class="sticker-spider" alt="Spider-Man asomándose">
+    <img src="flower.png" class="sticker-flores" alt="Flores decorativas">
 
     <div class="stars">
         <span class="star" style="top: 15%; left: 12%; animation-delay: 0s;"></span>
@@ -284,6 +286,10 @@
         <main class="container">
             <div class="small-text">para mi niño precioso</div>
             <h1>Nuestro primer mes</h1>
+
+            <!-- AQUÍ ESTÁ TU IMAGEN DE LAS MANOS -->
+            <img src="manos.png" class="imagen-manos" alt="Manos a punto de tocarse">
+
             <p class="subtitle">Una pequeña sorpresa hecha especialmente para ti.</p>
             <a href="#carta-section" class="start-button">COMENZAR</a>
         </main>
@@ -335,7 +341,7 @@
             </div>
 
             <div id="sorpresa-box">
-                <p style="font-family: Georgia, serif; font-size: 1.1rem; color: #86efac; line-height: 1.6;">
+                <p style="font-family: Georgia, serif; font-size: 1.1rem; color: #e9d5ff; line-height: 1.6;">
                     “Gracias por existir y formar parte de mi historia.”
                 </p>
             </div>
