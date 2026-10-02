@@ -519,19 +519,26 @@ body{
 
 }
 
-
 /* =========================================================
-   PLANETAS — MÁS DETALLADOS
+   PLANETAS — SOLO LÍNEAS / ELEGANTES
 ========================================================= */
 
 .planet{
     position:absolute;
     border-radius:50%;
     pointer-events:none;
+
+    background:transparent !important;
+
+    box-shadow:none !important;
+
+    opacity:.65;
 }
 
 
-/* PLANETA 1 */
+/* =========================================================
+   PLANETA 1 — GRANDE
+========================================================= */
 
 .planet.one{
 
@@ -541,27 +548,14 @@ body{
     top:5%;
     right:1%;
 
-    background:
-
-        radial-gradient(
-            circle at 30% 25%,
-            rgba(245,229,255,.9) 0%,
-            rgba(197,145,235,.85) 18%,
-            rgba(132,75,177,.95) 48%,
-            rgba(69,32,94,1) 75%,
-            rgba(21,9,30,1) 100%
-        );
+    border:1px solid rgba(225,202,250,.55);
 
     box-shadow:
-        inset -22px -18px 30px rgba(0,0,0,.55),
-        inset 8px 8px 18px rgba(255,255,255,.18),
-        0 0 35px rgba(176,111,232,.24);
-
-    overflow:visible;
+        0 0 18px rgba(203,163,239,.08) !important;
 }
 
 
-/* Texturas del planeta */
+/* líneas interiores del planeta */
 
 .planet.one::before{
 
@@ -569,36 +563,28 @@ body{
 
     position:absolute;
 
-    width:22px;
-    height:9px;
+    width:72px;
+    height:35px;
 
-    top:31px;
-    left:23px;
+    left:15px;
+    top:30px;
+
+    border-top:1px solid rgba(225,202,250,.28);
+    border-bottom:1px solid rgba(225,202,250,.18);
 
     border-radius:50%;
 
-    background:rgba(64,28,86,.38);
-
-    transform:rotate(-18deg);
-
-    box-shadow:
-        33px 20px 0 3px rgba(75,34,99,.27),
-        8px 38px 0 1px rgba(241,218,255,.14),
-        45px -8px 0 2px rgba(53,23,73,.28);
+    transform:rotate(-25deg);
 }
 
 
-/* ANILLO */
+/* anillo */
 
 .planet.one::after{
-
-    content:"";
-
-    position:absolute;
-
-    width:155px;
-    height:43px;
-
+    width:105px;
+    height:31px;
+    border-width:1px;
+}
     left:50%;
     top:50%;
 
@@ -606,21 +592,21 @@ body{
         translate(-50%,-50%)
         rotate(-18deg);
 
-    border:7px solid rgba(208,172,239,.30);
-
-    border-left-color:rgba(237,218,252,.55);
-    border-right-color:rgba(111,66,143,.35);
+    border:1px solid rgba(225,202,250,.32);
 
     border-radius:50%;
 
-    box-shadow:
-        0 0 10px rgba(205,165,239,.15);
+    box-shadow:none;
+
+    background:transparent;
 
     z-index:-1;
 }
 
 
-/* PLANETA 2 */
+/* =========================================================
+   PLANETA 2 — PEQUEÑO
+========================================================= */
 
 .planet.two{
 
@@ -630,20 +616,14 @@ body{
     bottom:11%;
     left:6%;
 
-    background:
-
-        radial-gradient(
-            circle at 33% 27%,
-            #f0e1ff 0%,
-            #b995d5 28%,
-            #73508d 63%,
-            #281532 100%
-        );
+    border:1px solid rgba(216,188,239,.48);
 
     box-shadow:
-        inset -12px -10px 17px rgba(0,0,0,.52),
-        0 0 28px rgba(179,124,224,.20);
+        0 0 15px rgba(193,143,229,.07) !important;
 }
+
+
+/* anillo del planeta 2 */
 
 .planet.two::before{
 
@@ -651,8 +631,8 @@ body{
 
     position:absolute;
 
-    width:72px;
-    height:20px;
+    width:76px;
+    height:21px;
 
     left:50%;
     top:50%;
@@ -661,13 +641,17 @@ body{
         translate(-50%,-50%)
         rotate(20deg);
 
-    border:3px solid rgba(211,182,234,.28);
+    border:1px solid rgba(216,188,239,.28);
 
     border-radius:50%;
+
+    background:transparent;
 }
 
 
-/* PLANETA 3 */
+/* =========================================================
+   PLANETA 3 — MUY PEQUEÑO
+========================================================= */
 
 .planet.three{
 
@@ -677,19 +661,14 @@ body{
     top:39%;
     left:8%;
 
-    background:
-
-        radial-gradient(
-            circle at 32% 27%,
-            #eee1fb,
-            #9e72c1 48%,
-            #3a204a 100%
-        );
+    border:1px solid rgba(221,192,246,.42);
 
     box-shadow:
-        inset -8px -7px 10px rgba(0,0,0,.5),
-        0 0 20px rgba(173,116,222,.18);
+        0 0 12px rgba(193,143,229,.06) !important;
 }
+
+
+/* anillo del planeta 3 */
 
 .planet.three::before{
 
@@ -707,11 +686,12 @@ body{
         translate(-50%,-50%)
         rotate(-25deg);
 
-    border:2px solid rgba(218,191,239,.28);
+    border:1px solid rgba(221,192,246,.25);
 
     border-radius:50%;
-}
 
+    background:transparent;
+}
 
 /* =========================================================
    ÓRBITAS CARTA
