@@ -7,7 +7,17 @@
 <title>Nuestro primer mes</title>
 
 <style>
+
+/* =====================================================
+   FUENTES
+===================================================== */
+
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500&display=swap');
+
+
+/* =====================================================
+   BASE
+===================================================== */
 
 *{
     margin:0;
@@ -15,58 +25,69 @@
     box-sizing:border-box;
 }
 
-html,body{
+html,
+body{
     width:100%;
     height:100%;
     overflow:hidden;
 }
 
 body{
-    background:#050208;
-    color:#eadcf7;
-    font-family:'Montserrat',sans-serif;
+    background:#050308;
+    color:#eee5f5;
+    font-family:'Montserrat', sans-serif;
 }
 
-/* =========================
-   FONDO GENERAL
-========================= */
 
-.page{
+/* =====================================================
+   FONDO
+===================================================== */
+
+.screen{
     position:absolute;
     inset:0;
     width:100%;
     height:100%;
     overflow:hidden;
+
     background:
         radial-gradient(
-            circle at 50% 48%,
-            #7444a0 0%,
-            #4c2670 18%,
-            #241233 42%,
-            #0d0714 70%,
-            #030205 100%
+            ellipse at center,
+            #76508f 0%,
+            #55326d 19%,
+            #30203e 39%,
+            #160d20 65%,
+            #050308 100%
         );
 }
 
-.page::after{
+
+/* Oscurece suavemente las esquinas */
+
+.screen::after{
     content:"";
     position:absolute;
     inset:0;
     pointer-events:none;
+
     background:
-        radial-gradient(circle at 50% 50%, transparent 0%, rgba(0,0,0,.18) 55%, rgba(0,0,0,.65) 100%);
+        radial-gradient(
+            ellipse at center,
+            transparent 25%,
+            rgba(0,0,0,.12) 48%,
+            rgba(0,0,0,.58) 100%
+        );
 }
 
-/* =========================
-   ESTRELLAS
-========================= */
+
+/* =====================================================
+   ESTRELLAS DE 4 PUNTAS
+===================================================== */
 
 .star{
     position:absolute;
-    width:8px;
-    height:8px;
-    transform:rotate(45deg);
-    pointer-events:none;
+    width:10px;
+    height:10px;
     z-index:2;
 }
 
@@ -74,186 +95,84 @@ body{
 .star::after{
     content:"";
     position:absolute;
-    background:#ead8ff;
+    background:#e8d9f1;
     border-radius:50%;
 }
 
 .star::before{
-    width:2px;
-    height:14px;
-    left:3px;
-    top:-3px;
+    width:1px;
+    height:18px;
+    left:4.5px;
+    top:-4px;
 }
 
 .star::after{
-    width:14px;
-    height:2px;
-    left:-3px;
-    top:3px;
-}
-
-.star.big{
-    width:11px;
-    height:11px;
-}
-
-.star.big::before{
-    height:22px;
-    width:2px;
-    left:4.5px;
-    top:-5px;
-}
-
-.star.big::after{
-    width:22px;
-    height:2px;
-    left:-5px;
+    width:18px;
+    height:1px;
+    left:-4px;
     top:4.5px;
 }
 
-/* =========================
-   LUNA CRESCIENTE
-========================= */
-
-.moon{
-    position:absolute;
-    width:105px;
-    height:105px;
-    border:2px solid rgba(231,211,255,.9);
-    border-radius:50%;
-    right:10%;
-    top:13%;
-    z-index:3;
-    filter:drop-shadow(0 0 12px rgba(210,173,245,.25));
+.star.small{
+    transform:scale(.55);
+    opacity:.7;
 }
 
-.moon::after{
+.star.medium{
+    transform:scale(.8);
+    opacity:.8;
+}
+
+.star.large{
+    transform:scale(1);
+}
+
+
+/* =====================================================
+   LUNA CRECIENTE
+===================================================== */
+
+.crescent{
+    position:absolute;
+    width:78px;
+    height:78px;
+    right:12%;
+    top:12%;
+    border-radius:50%;
+
+    border:1px solid rgba(235,219,246,.85);
+
+    z-index:3;
+}
+
+.crescent::after{
     content:"";
     position:absolute;
-    width:105px;
-    height:105px;
+
+    width:78px;
+    height:78px;
+
     border-radius:50%;
-    background:#11091a;
-    left:28px;
+
+    background:#2b1936;
+
+    left:22px;
     top:-7px;
 }
 
-/* =========================
-   PLANETAS SOLO LINEAS
-========================= */
 
-.planet{
-    position:absolute;
-    width:72px;
-    height:72px;
-    border:1px solid rgba(221,194,247,.72);
-    border-radius:50%;
-    z-index:2;
-}
-
-.planet::before,
-.planet::after{
-    content:"";
-    position:absolute;
-    pointer-events:none;
-}
-
-/* líneas internas del planeta */
-
-.planet::before{
-    left:8px;
-    right:8px;
-    top:17px;
-    height:1px;
-    background:rgba(221,194,247,.35);
-    box-shadow:
-        0 10px rgba(221,194,247,.25),
-        0 20px rgba(221,194,247,.3),
-        0 30px rgba(221,194,247,.2);
-    transform:rotate(-8deg);
-}
-
-.planet::after{
-    width:130%;
-    height:42%;
-    left:-15%;
-    top:29%;
-    border-top:1px solid rgba(221,194,247,.65);
-    border-bottom:1px solid rgba(221,194,247,.25);
-    border-radius:50%;
-    transform:rotate(-12deg);
-}
-
-/* Planeta pequeño */
-
-.planet.small{
-    width:48px;
-    height:48px;
-}
-
-.planet.small::before{
-    left:5px;
-    right:5px;
-    top:12px;
-    box-shadow:
-        0 8px rgba(221,194,247,.25),
-        0 16px rgba(221,194,247,.2);
-}
-
-.planet.small::after{
-    width:135%;
-    height:45%;
-}
-
-/* Planeta grande */
-
-.planet.large{
-    width:82px;
-    height:82px;
-}
-
-.planet.large::before{
-    left:9px;
-    right:9px;
-    top:19px;
-    box-shadow:
-        0 12px rgba(221,194,247,.25),
-        0 24px rgba(221,194,247,.22),
-        0 36px rgba(221,194,247,.18);
-}
-
-.planet.large::after{
-    width:135%;
-}
-
-/* Anillos independientes */
-
-.ring{
-    position:absolute;
-    width:145px;
-    height:45px;
-    border:1px solid rgba(221,194,247,.58);
-    border-radius:50%;
-    transform:rotate(-12deg);
-    pointer-events:none;
-}
-
-.ring.thin{
-    width:125px;
-    height:35px;
-    opacity:.65;
-}
-
-/* =========================
-   FLORES / RAMAS
-========================= */
+/* =====================================================
+   DIBUJOS BOTÁNICOS
+===================================================== */
 
 .botanical{
     position:absolute;
-    width:280px;
-    height:330px;
-    opacity:.48;
+    width:245px;
+    height:300px;
+
     z-index:1;
+    opacity:.38;
+
     pointer-events:none;
 }
 
@@ -263,621 +182,944 @@ body{
 }
 
 .botanical path,
+.botanical ellipse,
 .botanical circle{
     fill:none;
-    stroke:#d9bdf0;
-    stroke-width:1.2;
+    stroke:#e1cce9;
+    stroke-width:1;
     stroke-linecap:round;
     stroke-linejoin:round;
 }
 
+
+/* izquierda inferior */
+
 .botanical.left{
-    left:-25px;
-    bottom:-40px;
+    left:-35px;
+    bottom:-45px;
 }
 
+
+/* derecha superior */
+
 .botanical.right{
-    right:-25px;
-    top:-40px;
+    right:-35px;
+    top:-45px;
     transform:scaleX(-1);
 }
 
-/* =========================
-   PORTADA
-========================= */
 
-.cover-content{
+/* =====================================================
+   PLANETAS LINEALES
+===================================================== */
+
+.line-planet{
     position:absolute;
-    z-index:10;
-    width:90%;
-    max-width:900px;
-    left:50%;
-    top:50%;
-    transform:translate(-50%,-50%);
-    text-align:center;
+    border:1px solid rgba(224,205,237,.58);
+    border-radius:50%;
+    z-index:2;
+    opacity:.72;
 }
 
-.cover-small{
-    font-size:12px;
-    letter-spacing:7px;
-    margin-bottom:25px;
-    color:#dcc8ec;
+
+/* planeta pequeño */
+
+.line-planet.small{
+    width:43px;
+    height:43px;
 }
 
-.cover-title{
-    font-family:'Cormorant Garamond',serif;
-    font-size:clamp(55px,7vw,105px);
-    font-weight:400;
-    line-height:.9;
-    color:#eee1fa;
-    text-shadow:0 0 30px rgba(207,161,248,.2);
+
+/* planeta mediano */
+
+.line-planet.medium{
+    width:62px;
+    height:62px;
 }
 
-.cover-line{
-    width:150px;
+
+/* planeta grande */
+
+.line-planet.large{
+    width:76px;
+    height:76px;
+}
+
+
+/* detalles internos */
+
+.line-planet::before{
+    content:"";
+    position:absolute;
+
+    width:65%;
     height:1px;
-    background:#d9c0ed;
-    margin:35px auto 25px;
-    position:relative;
+
+    left:17%;
+    top:37%;
+
+    background:rgba(224,205,237,.42);
+
+    transform:rotate(-12deg);
+
+    box-shadow:
+        3px 12px 0 rgba(224,205,237,.22),
+        -2px 23px 0 rgba(224,205,237,.18);
 }
 
-.cover-line::after{
-    content:"✦";
+
+/* anillo */
+
+.planet-ring{
     position:absolute;
-    left:50%;
-    top:50%;
-    transform:translate(-50%,-54%);
-    font-size:18px;
-    color:#e7d5f7;
-    background:#48236a;
-    padding:0 9px;
+
+    width:150%;
+    height:40%;
+
+    left:-25%;
+    top:30%;
+
+    border:1px solid rgba(224,205,237,.38);
+    border-radius:50%;
+
+    transform:rotate(-12deg);
 }
 
-.cover-description{
-    max-width:430px;
-    margin:auto;
-    font-family:'Cormorant Garamond',serif;
-    font-size:21px;
-    line-height:1.5;
-    color:#dfcee9;
-}
 
-.start-btn{
-    margin-top:45px;
-    padding:16px 65px;
-    border-radius:50px;
-    border:1px solid rgba(230,211,249,.85);
-    background:rgba(76,42,106,.18);
-    color:#eee2fa;
-    font-family:'Montserrat',sans-serif;
-    font-size:11px;
-    letter-spacing:5px;
-    cursor:pointer;
-    transition:.4s;
-}
+/* =====================================================
+   POSICIONES DE PLANETAS DE PORTADA
+===================================================== */
 
-.start-btn:hover{
-    background:rgba(192,147,230,.16);
-    box-shadow:0 0 30px rgba(203,157,240,.2);
-    transform:translateY(-2px);
-}
-
-/* =========================
-   PLANETAS DE PORTADA
-========================= */
-
-.cover-planet-1{
-    left:7%;
+.cover-planet-one{
+    left:8%;
     top:28%;
 }
 
-.cover-planet-2{
-    left:4%;
+.cover-planet-two{
+    left:14%;
     bottom:18%;
 }
 
-.cover-planet-3{
+.cover-planet-three{
     right:8%;
-    bottom:12%;
+    bottom:13%;
 }
 
-/* =========================
-   CARTA
-========================= */
 
-.letter-screen{
-    display:none;
-}
-
-.letter-card{
-    position:absolute;
-    width:min(680px,84%);
-    height:min(680px,78vh);
-    left:50%;
-    top:50%;
-    transform:translate(-50%,-50%);
-    border:1px solid rgba(221,194,247,.55);
-    border-radius:20px;
-    background:rgba(30,14,45,.27);
-    box-shadow:
-        0 0 45px rgba(153,89,206,.12),
-        inset 0 0 40px rgba(164,106,214,.06);
-    padding:65px 70px;
-    z-index:10;
-    display:flex;
-    flex-direction:column;
-}
-
-.letter-top{
-    text-align:center;
-}
-
-.letter-label{
-    font-size:9px;
-    letter-spacing:6px;
-    color:#cdb4dd;
-    margin-bottom:22px;
-}
-
-.letter-title{
-    font-family:'Cormorant Garamond',serif;
-    font-size:clamp(38px,4.5vw,62px);
-    font-weight:400;
-    color:#eadcf7;
-}
-
-.letter-divider{
-    width:160px;
-    height:1px;
-    background:rgba(220,194,240,.55);
-    margin:28px auto 40px;
-    position:relative;
-}
-
-.letter-divider::after{
-    content:"✦";
-    position:absolute;
-    left:50%;
-    top:50%;
-    transform:translate(-50%,-55%);
-    background:#281337;
-    padding:0 9px;
-    color:#e9d6fa;
-}
-
-.letter-body{
-    flex:1;
-    overflow:hidden;
-}
-
-.letter-body h3{
-    font-family:'Cormorant Garamond',serif;
-    font-size:25px;
-    font-weight:400;
-    font-style:italic;
-    margin-bottom:20px;
-    color:#e7d5f5;
-}
-
-.letter-body p{
-    font-family:'Cormorant Garamond',serif;
-    font-size:19px;
-    line-height:1.55;
-    color:#dfd0e8;
-    font-weight:400;
-}
-
-.letter-footer{
-    margin-top:auto;
-    text-align:center;
-}
-
-.navigation{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    gap:45px;
-    margin-top:25px;
-}
-
-.nav-btn{
-    border:1px solid rgba(220,198,239,.6);
-    background:rgba(0,0,0,.08);
-    color:#ded0ea;
-    border-radius:30px;
-    padding:12px 23px;
-    font-size:9px;
-    letter-spacing:3px;
-    cursor:pointer;
-    transition:.3s;
-}
-
-.nav-btn:hover{
-    background:rgba(197,151,230,.12);
-}
-
-.page-number{
-    font-size:9px;
-    letter-spacing:4px;
-    color:#cdb9d9;
-}
-
-.date{
-    margin-top:30px;
-    font-size:9px;
-    letter-spacing:6px;
-    color:#c9b1d8;
-}
-
-.date-line{
-    width:45px;
-    height:1px;
-    background:#9b7daf;
-    display:inline-block;
-    vertical-align:middle;
-    margin:0 15px;
-}
-
-/* =========================
-   PLANETAS ALREDEDOR DE CARTA
-========================= */
-
-.letter-planet-a{
-    left:5%;
-    top:9%;
-}
-
-.letter-planet-b{
-    right:3%;
-    top:39%;
-}
-
-.letter-planet-c{
-    left:7%;
-    bottom:8%;
-}
-
-.letter-ring-a{
-    left:1%;
-    top:6%;
-}
-
-.letter-ring-b{
-    right:-1%;
-    top:36%;
-}
-
-.letter-ring-c{
-    left:3%;
-    bottom:6%;
-}
-
-/* =========================
-   ORBITAS GRANDES
-========================= */
+/* =====================================================
+   ÓRBITAS MUY SUTILES
+===================================================== */
 
 .orbit{
     position:absolute;
-    border:1px solid rgba(193,155,220,.22);
+    border:1px solid rgba(215,187,229,.13);
     border-radius:50%;
-    pointer-events:none;
     z-index:1;
+    pointer-events:none;
 }
 
 .orbit.one{
-    width:720px;
-    height:250px;
-    left:-160px;
-    top:15%;
+    width:620px;
+    height:190px;
+
+    left:-120px;
+    top:16%;
+
     transform:rotate(-12deg);
 }
 
 .orbit.two{
-    width:760px;
-    height:260px;
-    right:-170px;
-    bottom:8%;
-    transform:rotate(9deg);
-}
-
-.orbit.three{
-    width:600px;
+    width:650px;
     height:210px;
-    left:35%;
-    top:-90px;
-    transform:rotate(-15deg);
+
+    right:-150px;
+    bottom:10%;
+
+    transform:rotate(10deg);
 }
 
-/* =========================
-   PLAYLIST
-========================= */
 
-.spotify-section{
-    display:none;
+/* =====================================================
+   PORTADA
+===================================================== */
+
+.cover-content{
     position:absolute;
-    inset:0;
-    z-index:20;
+
+    width:90%;
+    max-width:850px;
+
+    left:50%;
+    top:50%;
+
+    transform:translate(-50%,-50%);
+
+    text-align:center;
+
+    z-index:10;
+}
+
+
+.cover-label{
+    font-size:10px;
+    letter-spacing:6px;
+
+    color:#d9c8e2;
+
+    margin-bottom:24px;
+}
+
+
+.cover-title{
+    font-family:'Cormorant Garamond',serif;
+
+    font-size:clamp(58px,8vw,105px);
+
+    font-weight:300;
+
+    line-height:.9;
+
+    color:#f0e5f5;
+
+    letter-spacing:-2px;
+}
+
+
+.cover-divider{
+    width:125px;
+    height:1px;
+
+    background:rgba(231,212,240,.7);
+
+    margin:32px auto 24px;
+
+    position:relative;
+}
+
+
+.cover-divider::after{
+    content:"✦";
+
+    position:absolute;
+
+    left:50%;
+    top:50%;
+
+    transform:translate(-50%,-53%);
+
+    background:#54336b;
+
+    padding:0 9px;
+
+    color:#eadcf1;
+
+    font-size:13px;
+}
+
+
+.cover-description{
+    font-family:'Cormorant Garamond',serif;
+
+    font-size:20px;
+
+    color:#dfd0e7;
+
+    line-height:1.5;
+
+    max-width:430px;
+
+    margin:auto;
+}
+
+
+.start-button{
+    margin-top:42px;
+
+    padding:14px 52px;
+
+    border:1px solid rgba(232,215,241,.7);
+
+    border-radius:50px;
+
+    background:transparent;
+
+    color:#eee3f3;
+
+    font-family:'Montserrat',sans-serif;
+
+    font-size:9px;
+
+    letter-spacing:5px;
+
+    cursor:pointer;
+
+    transition:.25s;
+}
+
+
+.start-button:hover{
+    background:rgba(220,194,235,.08);
+}
+
+
+/* =====================================================
+   CARTA
+===================================================== */
+
+#letter{
+    display:none;
+}
+
+
+.letter-card{
+    position:absolute;
+
+    width:min(650px,82%);
+    height:min(650px,78vh);
+
+    left:50%;
+    top:50%;
+
+    transform:translate(-50%,-50%);
+
+    z-index:10;
+
+    padding:58px 65px;
+
+    border:1px solid rgba(225,205,236,.42);
+
+    border-radius:18px;
+
+    background:rgba(24,12,32,.23);
+
+    box-shadow:
+        0 0 60px rgba(178,125,205,.08);
+}
+
+
+.letter-label{
+    text-align:center;
+
+    font-size:8px;
+
+    letter-spacing:5px;
+
+    color:#cbb7d5;
+
+    margin-bottom:18px;
+}
+
+
+.letter-title{
+    font-family:'Cormorant Garamond',serif;
+
+    font-size:clamp(38px,5vw,60px);
+
+    font-weight:300;
+
+    text-align:center;
+
+    color:#eee3f4;
+}
+
+
+.letter-divider{
+    width:125px;
+    height:1px;
+
+    background:rgba(224,202,236,.45);
+
+    margin:25px auto 35px;
+
+    position:relative;
+}
+
+
+.letter-divider::after{
+    content:"✦";
+
+    position:absolute;
+
+    left:50%;
+    top:50%;
+
+    transform:translate(-50%,-52%);
+
+    background:#33203f;
+
+    padding:0 8px;
+
+    color:#ead9f2;
+}
+
+
+.letter-body{
+    height:330px;
+
+    overflow:hidden;
+
+    text-align:left;
+}
+
+
+.letter-subtitle{
+    font-family:'Cormorant Garamond',serif;
+
+    font-size:24px;
+
+    font-style:italic;
+
+    font-weight:400;
+
+    color:#e6d5ed;
+
+    margin-bottom:18px;
+}
+
+
+.letter-text{
+    font-family:'Cormorant Garamond',serif;
+
+    font-size:18px;
+
+    line-height:1.58;
+
+    color:#dfd2e5;
+}
+
+
+.letter-footer{
+    position:absolute;
+
+    left:65px;
+    right:65px;
+    bottom:30px;
+
+    text-align:center;
+}
+
+
+.navigation{
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    gap:35px;
+}
+
+
+.nav-button{
+    border:1px solid rgba(224,205,235,.45);
+
+    background:transparent;
+
+    color:#d9c9e2;
+
+    padding:9px 17px;
+
+    border-radius:30px;
+
+    font-family:'Montserrat',sans-serif;
+
+    font-size:8px;
+
+    letter-spacing:2px;
+
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+
+.nav-button:hover{
+    background:rgba(220,195,234,.07);
+}
+
+
+.page-number{
+    font-size:8px;
+
+    letter-spacing:3px;
+
+    color:#bfaacb;
+}
+
+
+.date{
+    margin-top:22px;
+
+    font-size:8px;
+
+    letter-spacing:5px;
+
+    color:#c7b4d0;
+}
+
+
+/* =====================================================
+   PLANETAS DE LA CARTA
+===================================================== */
+
+.letter-planet-one{
+    left:5%;
+    top:14%;
+}
+
+.letter-planet-two{
+    right:5%;
+    top:43%;
+}
+
+.letter-planet-three{
+    left:9%;
+    bottom:10%;
+}
+
+
+/* =====================================================
+   PLAYLIST
+===================================================== */
+
+#playlist{
+    display:none;
+
     align-items:center;
     justify-content:center;
 }
 
-.spotify-box{
+
+.playlist-card{
     width:min(600px,88%);
+
     padding:45px;
-    border:1px solid rgba(221,194,247,.45);
-    border-radius:20px;
-    background:rgba(30,14,45,.45);
+
+    border:1px solid rgba(225,205,236,.42);
+
+    border-radius:18px;
+
+    background:rgba(24,12,32,.3);
+
     text-align:center;
+
+    z-index:10;
 }
 
-.spotify-box h2{
+
+.playlist-card h2{
     font-family:'Cormorant Garamond',serif;
+
     font-size:48px;
-    font-weight:400;
+
+    font-weight:300;
+
     margin-bottom:12px;
 }
 
-.spotify-box p{
+
+.playlist-card p{
     font-family:'Cormorant Garamond',serif;
-    font-size:20px;
+
+    font-size:19px;
+
+    color:#d6c5df;
+
     margin-bottom:25px;
-    color:#d7c6e1;
 }
+
 
 .spotify-player iframe{
     width:100%;
+
     border-radius:12px;
 }
 
-.back-btn{
-    margin-top:25px;
+
+.back-button{
+    margin-top:22px;
 }
 
-/* =========================
-   RESPONSIVE
-========================= */
+
+/* =====================================================
+   MÓVIL
+===================================================== */
 
 @media(max-width:700px){
 
-    .moon{
-        width:70px;
-        height:70px;
+    .crescent{
+        width:58px;
+        height:58px;
+
         right:8%;
         top:9%;
     }
 
-    .moon::after{
-        width:70px;
-        height:70px;
-        left:20px;
+    .crescent::after{
+        width:58px;
+        height:58px;
+
+        left:17px;
+        top:-5px;
     }
 
-    .cover-small{
-        font-size:8px;
+
+    .cover-label{
+        font-size:7px;
         letter-spacing:4px;
     }
+
 
     .cover-title{
         font-size:55px;
     }
+
 
     .cover-description{
         font-size:18px;
         max-width:300px;
     }
 
-    .cover-planet-1{
-        left:2%;
-        top:25%;
-        transform:scale(.7);
+
+    .botanical{
+        width:175px;
+        height:220px;
+
+        opacity:.28;
     }
 
-    .cover-planet-2{
+
+    .cover-planet-one{
         left:1%;
-        bottom:12%;
+        top:24%;
         transform:scale(.7);
     }
 
-    .cover-planet-3{
-        right:0;
+
+    .cover-planet-two{
+        left:1%;
         bottom:10%;
         transform:scale(.65);
     }
 
-    .botanical{
-        width:190px;
-        height:240px;
-        opacity:.35;
+
+    .cover-planet-three{
+        right:-2%;
+        bottom:9%;
+        transform:scale(.65);
     }
+
 
     .letter-card{
         width:90%;
         height:82vh;
-        padding:40px 28px 30px;
+
+        padding:38px 27px;
     }
+
 
     .letter-title{
-        font-size:39px;
+        font-size:40px;
     }
 
-    .letter-divider{
-        margin:20px auto 25px;
+
+    .letter-body{
+        height:330px;
     }
 
-    .letter-body h3{
-        font-size:22px;
-    }
 
-    .letter-body p{
+    .letter-text{
         font-size:17px;
-        line-height:1.48;
+        line-height:1.5;
     }
+
+
+    .letter-footer{
+        left:27px;
+        right:27px;
+    }
+
 
     .navigation{
         gap:10px;
     }
 
-    .nav-btn{
-        padding:10px 13px;
-        font-size:8px;
-        letter-spacing:2px;
+
+    .nav-button{
+        padding:9px 12px;
+
+        font-size:7px;
     }
 
-    .page-number{
-        font-size:8px;
-    }
 
-    .letter-planet-a{
+    .letter-planet-one{
         left:-10px;
-        top:4%;
-        transform:scale(.7);
-    }
+        top:5%;
 
-    .letter-planet-b{
-        right:-15px;
-        top:40%;
         transform:scale(.65);
     }
 
-    .letter-planet-c{
+
+    .letter-planet-two{
+        right:-10px;
+        top:42%;
+
+        transform:scale(.6);
+    }
+
+
+    .letter-planet-three{
         left:-5px;
         bottom:3%;
-        transform:scale(.7);
+
+        transform:scale(.65);
     }
 
-    .orbit.one{
-        width:500px;
-        left:-200px;
-    }
 
-    .orbit.two{
-        width:500px;
-        right:-230px;
-    }
-
-    .orbit.three{
-        width:450px;
-        left:20%;
-    }
-
-    .spotify-box{
+    .playlist-card{
         padding:30px 20px;
     }
 
-    .spotify-box h2{
+
+    .playlist-card h2{
         font-size:38px;
     }
+
 }
+
 </style>
 </head>
 
+
 <body>
+
 
 <!-- =====================================================
      PORTADA
 ===================================================== -->
 
-<section class="page" id="cover">
+<section class="screen" id="cover">
+
 
     <!-- ESTRELLAS -->
-    <div class="star big" style="left:5%;top:35%;"></div>
-    <div class="star" style="left:12%;top:13%;"></div>
-    <div class="star" style="left:28%;top:19%;"></div>
-    <div class="star big" style="left:52%;top:8%;"></div>
-    <div class="star" style="left:72%;top:21%;"></div>
-    <div class="star" style="right:6%;top:32%;"></div>
-    <div class="star big" style="right:15%;bottom:18%;"></div>
-    <div class="star" style="left:20%;bottom:12%;"></div>
-    <div class="star" style="left:46%;bottom:9%;"></div>
+
+    <div class="star large" style="left:7%;top:30%;"></div>
+
+    <div class="star small" style="left:17%;top:12%;"></div>
+
+    <div class="star medium" style="left:31%;top:17%;"></div>
+
+    <div class="star large" style="left:52%;top:8%;"></div>
+
+    <div class="star small" style="right:24%;top:24%;"></div>
+
+    <div class="star medium" style="right:8%;top:36%;"></div>
+
+    <div class="star large" style="right:16%;bottom:18%;"></div>
+
+    <div class="star small" style="left:24%;bottom:12%;"></div>
+
 
     <!-- LUNA -->
-    <div class="moon"></div>
 
-    <!-- PLANETAS SOLO LINEA -->
-    <div class="planet cover-planet-1">
-        <div class="ring"></div>
+    <div class="crescent"></div>
+
+
+    <!-- PLANETAS -->
+
+    <div class="line-planet medium cover-planet-one">
+        <div class="planet-ring"></div>
     </div>
 
-    <div class="planet small cover-planet-2">
-        <div class="ring thin"></div>
+
+    <div class="line-planet small cover-planet-two">
+        <div class="planet-ring"></div>
     </div>
 
-    <div class="planet large cover-planet-3">
-        <div class="ring"></div>
+
+    <div class="line-planet large cover-planet-three">
+        <div class="planet-ring"></div>
     </div>
 
-    <!-- ORBITAS -->
+
+    <!-- ÓRBITAS -->
+
     <div class="orbit one"></div>
+
     <div class="orbit two"></div>
 
+
     <!-- FLORES -->
+
     <div class="botanical left">
-        <svg viewBox="0 0 280 330">
 
-            <path d="M35 325 C45 270,75 230,105 185 C130 145,155 100,215 45"/>
+        <svg viewBox="0 0 245 300">
 
-            <path d="M95 205 C65 190,43 195,31 218 C55 228,78 221,95 205Z"/>
+            <path d="M30 295
+                     C45 250,
+                     70 218,
+                     92 180
+                     C118 136,
+                     150 91,
+                     205 42"/>
 
-            <path d="M115 174 C87 154,65 157,54 180 C77 190,99 187,115 174Z"/>
+            <path d="M83 195
+                     C58 180,
+                     39 185,
+                     28 204
+                     C48 216,
+                     68 211,
+                     83 195Z"/>
 
-            <path d="M145 126 C124 105,104 108,94 127 C111 139,132 137,145 126Z"/>
+            <path d="M106 159
+                     C83 143,
+                     65 147,
+                     54 166
+                     C72 177,
+                     93 174,
+                     106 159Z"/>
 
-            <path d="M173 91 C192 63,216 59,236 76 C221 97,195 103,173 91Z"/>
+            <path d="M135 119
+                     C116 101,
+                     98 105,
+                     90 122
+                     C106 133,
+                     123 131,
+                     135 119Z"/>
 
-            <path d="M210 45 C194 29,197 10,214 5 C230 1,239 20,230 35 C244 22,264 28,265 44 C265 60,242 66,226 53 C236 70,223 85,207 80 C191 75,194 57,210 45Z"/>
+            <path d="M163 83
+                     C180 60,
+                     200 58,
+                     217 71
+                     C205 90,
+                     182 94,
+                     163 83Z"/>
 
-            <circle cx="219" cy="43" r="5"/>
+            <path d="M204 43
+                     C191 29,
+                     193 13,
+                     207 8
+                     C220 3,
+                     229 18,
+                     222 31
+                     C234 20,
+                     250 24,
+                     251 37
+                     C251 50,
+                     232 55,
+                     219 46
+                     C227 60,
+                     216 72,
+                     203 68
+                     C190 64,
+                     191 53,
+                     204 43Z"/>
 
-            <path d="M150 126 C166 143,169 163,154 177 C137 169,133 147,150 126Z"/>
-
-            <path d="M102 185 C119 199,120 219,104 231 C89 219,87 201,102 185Z"/>
+            <circle cx="214" cy="41" r="4"/>
 
         </svg>
+
     </div>
+
 
     <div class="botanical right">
-        <svg viewBox="0 0 280 330">
 
-            <path d="M35 325 C45 270,75 230,105 185 C130 145,155 100,215 45"/>
+        <svg viewBox="0 0 245 300">
 
-            <path d="M95 205 C65 190,43 195,31 218 C55 228,78 221,95 205Z"/>
+            <path d="M30 295
+                     C45 250,
+                     70 218,
+                     92 180
+                     C118 136,
+                     150 91,
+                     205 42"/>
 
-            <path d="M115 174 C87 154,65 157,54 180 C77 190,99 187,115 174Z"/>
+            <path d="M83 195
+                     C58 180,
+                     39 185,
+                     28 204
+                     C48 216,
+                     68 211,
+                     83 195Z"/>
 
-            <path d="M145 126 C124 105,104 108,94 127 C111 139,132 137,145 126Z"/>
+            <path d="M106 159
+                     C83 143,
+                     65 147,
+                     54 166
+                     C72 177,
+                     93 174,
+                     106 159Z"/>
 
-            <path d="M173 91 C192 63,216 59,236 76 C221 97,195 103,173 91Z"/>
+            <path d="M135 119
+                     C116 101,
+                     98 105,
+                     90 122
+                     C106 133,
+                     123 131,
+                     135 119Z"/>
 
-            <path d="M210 45 C194 29,197 10,214 5 C230 1,239 20,230 35 C244 22,264 28,265 44 C265 60,242 66,226 53 C236 70,223 85,207 80 C191 75,194 57,210 45Z"/>
+            <path d="M163 83
+                     C180 60,
+                     200 58,
+                     217 71
+                     C205 90,
+                     182 94,
+                     163 83Z"/>
 
-            <circle cx="219" cy="43" r="5"/>
+            <path d="M204 43
+                     C191 29,
+                     193 13,
+                     207 8
+                     C220 3,
+                     229 18,
+                     222 31
+                     C234 20,
+                     250 24,
+                     251 37
+                     C251 50,
+                     232 55,
+                     219 46
+                     C227 60,
+                     216 72,
+                     203 68
+                     C190 64,
+                     191 53,
+                     204 43Z"/>
 
-            <path d="M150 126 C166 143,169 163,154 177 C137 169,133 147,150 126Z"/>
-
-            <path d="M102 185 C119 199,120 219,104 231 C89 219,87 201,102 185Z"/>
+            <circle cx="214" cy="41" r="4"/>
 
         </svg>
+
     </div>
 
-    <!-- CONTENIDO -->
+
+    <!-- TEXTO -->
+
     <div class="cover-content">
 
-        <div class="cover-small">
+        <div class="cover-label">
             PARA MI PERSONA FAVORITA
         </div>
+
 
         <h1 class="cover-title">
             Nuestro primer mes
         </h1>
 
-        <div class="cover-line"></div>
+
+        <div class="cover-divider"></div>
+
 
         <p class="cover-description">
             Una pequeña sorpresa hecha especialmente para ti.
         </p>
 
-        <button class="start-btn" onclick="startLetter()">
+
+        <button
+            class="start-button"
+            onclick="openLetter()">
+
             COMENZAR
+
         </button>
 
     </div>
@@ -885,140 +1127,274 @@ body{
 </section>
 
 
+
 <!-- =====================================================
      CARTA
 ===================================================== -->
 
-<section class="page letter-screen" id="letter">
+<section class="screen" id="letter">
+
 
     <!-- ESTRELLAS -->
 
-    <div class="star big" style="left:5%;top:14%;"></div>
-    <div class="star" style="left:17%;top:7%;"></div>
-    <div class="star" style="left:31%;top:15%;"></div>
-    <div class="star big" style="right:17%;top:10%;"></div>
-    <div class="star" style="right:7%;top:27%;"></div>
-    <div class="star" style="right:16%;bottom:16%;"></div>
-    <div class="star big" style="left:12%;bottom:18%;"></div>
-    <div class="star" style="left:43%;bottom:8%;"></div>
+    <div class="star small" style="left:7%;top:12%;"></div>
 
-    <!-- ORBITAS -->
-    <div class="orbit one"></div>
-    <div class="orbit two"></div>
-    <div class="orbit three"></div>
+    <div class="star medium" style="left:18%;top:8%;"></div>
 
-    <!-- PLANETAS SOLO LINEA -->
+    <div class="star small" style="left:33%;top:13%;"></div>
 
-    <div class="planet large letter-planet-a">
-        <div class="ring"></div>
+    <div class="star large" style="right:18%;top:10%;"></div>
+
+    <div class="star small" style="right:7%;top:29%;"></div>
+
+    <div class="star medium" style="right:13%;bottom:15%;"></div>
+
+    <div class="star large" style="left:10%;bottom:17%;"></div>
+
+
+    <!-- PLANETAS -->
+
+    <div class="line-planet large letter-planet-one">
+        <div class="planet-ring"></div>
     </div>
 
-    <div class="planet letter-planet-b">
-        <div class="ring thin"></div>
+
+    <div class="line-planet medium letter-planet-two">
+        <div class="planet-ring"></div>
     </div>
 
-    <div class="planet small letter-planet-c">
-        <div class="ring"></div>
+
+    <div class="line-planet small letter-planet-three">
+        <div class="planet-ring"></div>
     </div>
+
 
     <!-- FLORES -->
 
     <div class="botanical left">
-        <svg viewBox="0 0 280 330">
 
-            <path d="M35 325 C45 270,75 230,105 185 C130 145,155 100,215 45"/>
+        <svg viewBox="0 0 245 300">
 
-            <path d="M95 205 C65 190,43 195,31 218 C55 228,78 221,95 205Z"/>
+            <path d="M30 295
+                     C45 250,
+                     70 218,
+                     92 180
+                     C118 136,
+                     150 91,
+                     205 42"/>
 
-            <path d="M115 174 C87 154,65 157,54 180 C77 190,99 187,115 174Z"/>
+            <path d="M83 195
+                     C58 180,
+                     39 185,
+                     28 204
+                     C48 216,
+                     68 211,
+                     83 195Z"/>
 
-            <path d="M145 126 C124 105,104 108,94 127 C111 139,132 137,145 126Z"/>
+            <path d="M106 159
+                     C83 143,
+                     65 147,
+                     54 166
+                     C72 177,
+                     93 174,
+                     106 159Z"/>
 
-            <path d="M173 91 C192 63,216 59,236 76 C221 97,195 103,173 91Z"/>
+            <path d="M135 119
+                     C116 101,
+                     98 105,
+                     90 122
+                     C106 133,
+                     123 131,
+                     135 119Z"/>
 
-            <path d="M210 45 C194 29,197 10,214 5 C230 1,239 20,230 35 C244 22,264 28,265 44 C265 60,242 66,226 53 C236 70,223 85,207 80 C191 75,194 57,210 45Z"/>
+            <path d="M163 83
+                     C180 60,
+                     200 58,
+                     217 71
+                     C205 90,
+                     182 94,
+                     163 83Z"/>
 
-            <circle cx="219" cy="43" r="5"/>
+            <path d="M204 43
+                     C191 29,
+                     193 13,
+                     207 8
+                     C220 3,
+                     229 18,
+                     222 31
+                     C234 20,
+                     250 24,
+                     251 37
+                     C251 50,
+                     232 55,
+                     219 46
+                     C227 60,
+                     216 72,
+                     203 68
+                     C190 64,
+                     191 53,
+                     204 43Z"/>
+
+            <circle cx="214" cy="41" r="4"/>
 
         </svg>
+
     </div>
+
 
     <div class="botanical right">
-        <svg viewBox="0 0 280 330">
 
-            <path d="M35 325 C45 270,75 230,105 185 C130 145,155 100,215 45"/>
+        <svg viewBox="0 0 245 300">
 
-            <path d="M95 205 C65 190,43 195,31 218 C55 228,78 221,95 205Z"/>
+            <path d="M30 295
+                     C45 250,
+                     70 218,
+                     92 180
+                     C118 136,
+                     150 91,
+                     205 42"/>
 
-            <path d="M115 174 C87 154,65 157,54 180 C77 190,99 187,115 174Z"/>
+            <path d="M83 195
+                     C58 180,
+                     39 185,
+                     28 204
+                     C48 216,
+                     68 211,
+                     83 195Z"/>
 
-            <path d="M145 126 C124 105,104 108,94 127 C111 139,132 137,145 126Z"/>
+            <path d="M106 159
+                     C83 143,
+                     65 147,
+                     54 166
+                     C72 177,
+                     93 174,
+                     106 159Z"/>
 
-            <path d="M173 91 C192 63,216 59,236 76 C221 97,195 103,173 91Z"/>
+            <path d="M135 119
+                     C116 101,
+                     98 105,
+                     90 122
+                     C106 133,
+                     123 131,
+                     135 119Z"/>
 
-            <path d="M210 45 C194 29,197 10,214 5 C230 1,239 20,230 35 C244 22,264 28,265 44 C265 60,242 66,226 53 C236 70,223 85,207 80 C191 75,194 57,210 45Z"/>
+            <path d="M163 83
+                     C180 60,
+                     200 58,
+                     217 71
+                     C205 90,
+                     182 94,
+                     163 83Z"/>
 
-            <circle cx="219" cy="43" r="5"/>
+            <path d="M204 43
+                     C191 29,
+                     193 13,
+                     207 8
+                     C220 3,
+                     229 18,
+                     222 31
+                     C234 20,
+                     250 24,
+                     251 37
+                     C251 50,
+                     232 55,
+                     219 46
+                     C227 60,
+                     216 72,
+                     203 68
+                     C190 64,
+                     191 53,
+                     204 43Z"/>
+
+            <circle cx="214" cy="41" r="4"/>
 
         </svg>
+
     </div>
+
 
 
     <!-- CARTA -->
 
     <div class="letter-card">
 
-        <div class="letter-top">
-
-            <div class="letter-label">
-                UNA CARTA PARA TI
-            </div>
-
-            <h1 class="letter-title" id="letterTitle">
-                Lo que siento por ti
-            </h1>
-
-            <div class="letter-divider"></div>
-
+        <div class="letter-label">
+            UNA CARTA PARA TI
         </div>
+
+
+        <h1
+            class="letter-title"
+            id="letterTitle">
+
+            Lo que siento por ti
+
+        </h1>
+
+
+        <div class="letter-divider"></div>
+
 
         <div class="letter-body">
 
-            <h3 id="letterSubtitle">
+            <h3
+                class="letter-subtitle"
+                id="letterSubtitle">
+
                 Lo que siento por ti
+
             </h3>
 
-            <p id="letterText">
+
+            <p
+                class="letter-text"
+                id="letterText">
+
                 Mi amor mi niño hermoso sabes cuanto te amo y todo lo q haría x ti?
                 Daría lo q fuera por tenerte a mi lado x probar tus labios y perdernos juntos.
                 Te amo y amo tu compañía, amo cuando ríes, amo tu humor, amo tus ojos,
                 amo tus labios, amo cada parte de ti.
+
             </p>
 
         </div>
+
 
         <div class="letter-footer">
 
             <div class="navigation">
 
-                <button class="nav-btn" onclick="previousPage()">
+                <button
+                    class="nav-button"
+                    onclick="previousPage()">
+
                     ← ANTERIOR
+
                 </button>
 
-                <div class="page-number" id="pageNumber">
-                    01 / 09
-                </div>
 
-                <button class="nav-btn" onclick="nextPage()">
+                <span
+                    class="page-number"
+                    id="pageNumber">
+
+                    01 / 10
+
+                </span>
+
+
+                <button
+                    class="nav-button"
+                    onclick="nextPage()">
+
                     SIGUIENTE →
+
                 </button>
 
             </div>
 
+
             <div class="date">
-                <span class="date-line"></span>
                 04 · 09 · 26
-                <span class="date-line"></span>
             </div>
 
         </div>
@@ -1028,25 +1404,30 @@ body{
 </section>
 
 
+
 <!-- =====================================================
      PLAYLIST
 ===================================================== -->
 
-<section class="page spotify-section" id="playlist">
+<section class="screen" id="playlist">
 
-    <div class="spotify-box">
+
+    <div class="playlist-card">
 
         <div class="letter-label">
             UNA PLAYLIST PARA TI
         </div>
 
+
         <h2>
             Canciones que me recuerdan a ti
         </h2>
 
+
         <p>
             Algunas canciones que quiero compartir contigo.
         </p>
+
 
         <div class="spotify-player">
 
@@ -1061,8 +1442,13 @@ body{
 
         </div>
 
-        <button class="nav-btn back-btn" onclick="backToLetter()">
+
+        <button
+            class="nav-button back-button"
+            onclick="backToLetter()">
+
             ← VOLVER
+
         </button>
 
     </div>
@@ -1070,86 +1456,108 @@ body{
 </section>
 
 
+
 <script>
 
 /* =====================================================
-   CARTA
+   CONTENIDO DE LA CARTA
 ===================================================== */
 
 const pages = [
 
 {
     title:"Lo que siento por ti",
+
     subtitle:"Lo que siento por ti",
+
     text:`Mi amor mi niño hermoso sabes cuanto te amo y todo lo q haría x ti? Daría lo q fuera por tenerte a mi lado x probar tus labios y perdernos juntos. Te amo y amo tu compañía, amo cuando ríes, amo tu humor, amo tus ojos, amo tus labios, amo cada parte de ti. No dejo de ver los videos en los q aparecemos juntos y veo lo feliz q soy a tu lado, lo feliz q me hace tenerte en mi vida, lo mucho q adoro reír contigo. Cada día haces especial mi vida y es muy lindo saber q tengo a alguien q me comprende.`
 },
 
 {
     title:"Lo que quizá no sabías de mí",
+
     subtitle:"Una parte de mí",
-    text:`Es algo fuerte pero agradezco q hagas q la vida se vea linda cuando siento q ya nd tiene solución. Pasé por muchas cosas de niña, cosas q no te imaginas y q te contaré poco a poco. Sabes no es fácil y aún hay cosas q estoy aprendiendo a contar.`
+
+    text:`Es algo fuerte pero agradezco q hagas q la vida se vea linda cuando siento q ya nd tiene solución. Pasé por muchas cosas de niña, cosas q no te imaginas y q te contaré poco a poco. No es fácil contar algunas cosas, pero contigo siento q poco a poco puedo hacerlo.`
 },
 
 {
     title:"Contigo puedo ser yo",
+
     subtitle:"Sentirme segura contigo",
+
     text:`Leer el chat y ver q contigo estoy segura y q d vrd me amas y me lo demuestras con cada palabra q me dices me calma. Siempre sentí q solo me querían x mi cuerpo o x como me veía, pero tú ves más allá de eso. Me ves a mí, ves q me gusta, q no me gusta, q siento, cómo soy y qué quiero en la vida.`
 },
 
 {
     title:"Así empezó todo",
+
     subtitle:"Poco a poco",
-    text:`Sabes me di cuenta d q contigo todo se ve mejor. Contigo siento q puedo ser yo y no necesito ocultar todo lo q x mucho tiempo afronté sola. Por primera vez siento q tengo a alguien que me entiende, q sabe quién soy y q ve algo en mí q yo a veces no reconozco. Me motivas a ser mejor cada día, a sonreír. Odiaba cómo sonreía hasta q llegaste tú con tus chistes sobre mí y tus stickers y me hacías reír en cada clase, aún sabiendo q no me gustaba jsjsjs.`
+
+    text:`Sabes me di cuenta d q contigo todo se ve mejor. Contigo siento q puedo ser yo y no necesito ocultar todo lo q x mucho tiempo afronté sola. Por primera vez siento q tengo a alguien que me entiende, q sabe quién soy y q ve algo en mí q yo a veces no reconozco. Me motivas a ser mejor cada día, a sonreír. Odiaba cómo sonreía hasta q llegaste tú con tus chistes sobre mí y tus stickers y me hacías reír en cada clase aún sabiendo q no me gustaba jsjsjs.`
 },
 
 {
     title:"Sí, me puse celosa",
+
     subtitle:"Nono dislike 👎",
+
     text:`Te burlabas de mí Nono dislike 👎 pero dentro de todo cada vez te fuiste apoderando de mi corazón. Poco a poco conectaba más contigo y aunque no lo veíamos cada vez éramos más unidos. Cada vez q te veía en cámara y veía cómo jugabas y te matabas de risa cuando los profes estaban hablando serio, me moría de risa y me dabas ternura.`
 },
 
 {
     title:"Por qué me enamoré de ti",
+
     subtitle:"No fue solo por enamorarme",
-    text:`Recuerdo q me puse celosa de Chumpitaz xq publicó una llamada y tbm xq sabía q era tu amiga y encima dijiste q era una buena amiga ps Nono malcriado. Al final yo soy tu novia 🥰. Pero pues no podía reclamar xq era tu vida. Más allá de enamorarme x lo q sentí, me enamoré de quién eres, de cómo eres: atento, cariñoso, gracioso, lindo, carismático, disciplinado, estudioso cuando quieres, pero sobre todo el hecho d q fueras empático y solidario me encantó de ti.`
+
+    text:`Recuerdo q me puse celosa de Chumpitaz xq publicó una llamada y tbm xq sabía q era tu amiga y encima dijiste q era una buena amiga ps Nono malcriado. Al final yo soy tu novia 🥰. Pero pues no podía reclamar xq era tu vida. Más allá de enamorarme x lo q sentí, me enamoré de quien eres, de cómo eres: atento, cariñoso, gracioso, lindo, carismático, disciplinado, estudioso cuando quieres, pero sobre todo el hecho d q fueras empático y solidario me encantó de ti.`
 },
 
 {
     title:"Lo que has cambiado en mí",
+
     subtitle:"Me haces sentir en calma",
-    text:`Ni durante clase te puedo dejar de pensar y es raro xq no creí q algún día fuera a encontrar a alguien tan perfecto como tú, q me entiende y me calma. Logras hacer q cada vez te ame más. Siento q curas partes q no rompiste y me encanta. Me siento en calma. Estar yo en calma es un milagro. No sé cómo no ves errores en mí cuando siento q soy de todo menos perfecta. A veces me da miedo ser demasiado intensa y agobiarte, x eso trato de darte tbm tu espacio.`
+
+    text:`Ni durante clase te puedo dejar de pensar y es raro xq no creí q algún día fuera a encontrar a alguien tan perfecto como tú q me entiende y me calma. Logras hacer q cada vez te ame más. Siento q curas partes q no rompiste y me encanta. Me siento en calma. Estar yo en calma es un milagro. A veces me da miedo ser demasiado intensa y agobiarte x eso trato de darte tbm tu espacio.`
 },
 
 {
     title:"Lo que imagino contigo",
+
     subtitle:"Un futuro juntos",
-    text:`Te convertiste en una persona muy importante para mí y quiero cuidarte, abrazarte, estar a tu lado y jamás dejarte, darte todo el cariño q te mereces porque eres una persona que se merece lo mejor de este mundo y del siguiente. Ya me imaginé una vida entera juntos, porque muero x formar una familia y hacerlos felices y llenarlos d amor. Te amo Mario, te adoro con toda el alma.`
+
+    text:`Te convertiste en una persona muy importante para mí y quiero cuidarte, abrazarte, estar a tu lado y jamás dejarte, darte todo el cariño q te mereces porque eres una persona que se merece lo mejor de este mundo y del siguiente. Ya me imaginé una vida entera juntos porque ya no puedo imaginar a otra persona en mi vida q no seas tú. Muero x formar una familia y hacerlos felices y llenarlos d amor. Te amo Mario, te adoro con toda el alma.`
 },
 
 {
     title:"Y si pudiera resumirlo...",
-    subtitle:"Nuestro primer mes",
-    text:`Cada día haces mi vida más interesante. Adoro verte y escuchar tu voz q me calma y me da ternura. Dios no sé q me hiciste, cada día te amo más y más. Gracias por hacerme tan feliz. Cuando solo éramos amigos eras una de las personas con las q más disfrutaba hablar en llamada y sentía q podía pasar horas hablando contigo o haciendo hora y eso se me ha quedado. No hay día q no quiera escuchar tu voz diciéndome lo mucho q me amas.`
+
+    subtitle:"Gracias por este primer mes",
+
+    text:`Cada día haces mi vida más interesante. Adoro verte y escuchar tu voz q me calma y me da ternura. Dios no sé q me hiciste, cada día te amo más y más. Gracias por hacerme tan feliz. Cuando solo éramos amigos eras una de las personas con las q más disfrutaba hablar en llamada y sentía q podía pasar horas hablando contigo o haciendo hora y eso se me ha quedado.`
 },
 
 {
     title:"Nuestro primer mes",
+
     subtitle:"04 / 09 / 26",
-    text:`Se que nos espera toda una vida juntos. Imagino contarle a nuestros hijos q nos conocimos en el colegio y q nos odiábamos a muerte pero poco a poco nos fuimos enamorando y logramos todas nuestras metas juntos. Recuerdo cuando veíamos pelis de terror y en vez de asustarme nos matábamos de risa cada 5 segundos JAJSJAJ.
+
+    text:`Sé que nos espera toda una vida juntos. Imagino contarle a nuestros hijos q nos conocimos en el colegio y q nos odiábamos a muerte pero poco a poco nos fuimos enamorando y logramos todas nuestras metas juntos. Recuerdo cuando veíamos pelis de terror y en vez de asustarme nos matábamos de risa cada 5 segundos JAJSJAJ.
 
 Te amo mi niño.`
 }
 
 ];
 
+
 let currentPage = 0;
 
 
 /* =====================================================
-   EMPEZAR
+   ABRIR CARTA
 ===================================================== */
 
-function startLetter(){
+function openLetter(){
 
     document.getElementById("cover").style.display="none";
 
@@ -1162,23 +1570,26 @@ function startLetter(){
 
 
 /* =====================================================
-   ACTUALIZAR CARTA
+   ACTUALIZAR PÁGINA
 ===================================================== */
 
 function updatePage(){
 
     const page = pages[currentPage];
 
-    document.getElementById("letterTitle").textContent=page.title;
+    document.getElementById("letterTitle").textContent =
+        page.title;
 
-    document.getElementById("letterSubtitle").textContent=page.subtitle;
+    document.getElementById("letterSubtitle").textContent =
+        page.subtitle;
 
-    document.getElementById("letterText").textContent=page.text;
+    document.getElementById("letterText").textContent =
+        page.text;
 
-    document.getElementById("pageNumber").textContent=
-        String(currentPage+1).padStart(2,"0")
-        +" / "
-        +String(pages.length).padStart(2,"0");
+    document.getElementById("pageNumber").textContent =
+        String(currentPage + 1).padStart(2,"0")
+        + " / "
+        + String(pages.length).padStart(2,"0");
 }
 
 
@@ -1188,7 +1599,7 @@ function updatePage(){
 
 function nextPage(){
 
-    if(currentPage < pages.length-1){
+    if(currentPage < pages.length - 1){
 
         currentPage++;
 
@@ -1201,7 +1612,6 @@ function nextPage(){
         document.getElementById("playlist").style.display="flex";
 
     }
-
 }
 
 
@@ -1218,7 +1628,6 @@ function previousPage(){
         updatePage();
 
     }
-
 }
 
 
