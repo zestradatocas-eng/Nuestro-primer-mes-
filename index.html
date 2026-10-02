@@ -250,26 +250,53 @@ body{
     opacity:.75;
 }
 
-.cover-moon::before,
+/* =========================================================
+   MEDIA LUNA DE PORTADA
+========================================================= */
+
+.cover-moon{
+    position:absolute;
+
+    width:120px;
+    height:120px;
+
+    right:9%;
+    top:12%;
+
+    border-radius:50%;
+
+    background:#eadcff;
+
+    box-shadow:
+        0 0 18px rgba(224,198,250,.25),
+        0 0 45px rgba(170,111,220,.12);
+
+    opacity:.82;
+
+    /* crea la forma de media luna */
+    overflow:hidden;
+}
+
 .cover-moon::after{
     content:"";
+
     position:absolute;
+
+    width:120px;
+    height:120px;
+
     border-radius:50%;
-    background:rgba(62,35,79,.22);
-}
 
-.cover-moon::before{
-    width:28px;
-    height:28px;
-    top:35px;
+    background:
+        radial-gradient(
+            circle at center,
+            #2b1739 0%,
+            #170b20 55%,
+            #07030a 100%
+        );
+
     left:35px;
-}
-
-.cover-moon::after{
-    width:17px;
-    height:17px;
-    bottom:30px;
-    right:35px;
+    top:-8px;
 }
 
 
